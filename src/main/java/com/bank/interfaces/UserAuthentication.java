@@ -6,7 +6,6 @@ public interface UserAuthentication {
 	
 	public boolean checkUser(String usrName, String psswd);
 
-	public boolean checkU7er(String usrName, String psswd);
 	
 	
 }
