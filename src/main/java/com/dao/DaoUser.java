@@ -48,7 +48,7 @@ public class DaoUser implements UserAuthentication {
 		//HQL example - Get All Employees
 		Transaction tx = session.beginTransaction();
 		@SuppressWarnings("deprecation")
-		Query query = session.createQuery("FROM User S WHERE S.userName = '"+ usrName +"' ");
+		Query query = session.createQuery("FROM User S WHERE S.userName = '"+ usrName +"' AND S.password = '"+ psswd +"' ");
 		return query.list().isEmpty();
 	}
 }

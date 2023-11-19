@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.springframework.context.ApplicationContext;
@@ -24,6 +25,8 @@ public class MainView implements ActionListener {
 		UserService usrService = (UserService) appconfig.getBean(UserService.class);
 		
 		JFrame frame = new JFrame("Main window");
+		
+		JOptionPane alert = new JOptionPane();
 		
 		
 		//Username section
@@ -41,15 +44,18 @@ public class MainView implements ActionListener {
 		JButton loginBtn = new JButton();
 		loginBtn.setText("Login");
 		loginBtn.addActionListener(new ActionListener() { 
-			  @SuppressWarnings("deprecation")
+			  @SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
 				  System.out.println("Your name is " + fieldUsername.getText() + " and your password is " + passwdField.getText());
 				  System.out.println(usrService.verifyUser(fieldUsername.getText(),passwdField.getText()));
-				  } 
-				} );
-		
-		
-		
+				  if (usrService.verifyUser(fieldUsername.getText(),passwdField.getText()) == false) {
+					frame.dispose();
+				  } else {
+					  alert.showMessageDialog(frame, "Please enter the right information",
+				               "User might not exist", JOptionPane.WARNING_MESSAGE);
+				  }
+			  } 
+			});
 		
 		//Panel element
 		JPanel panel = new JPanel();
