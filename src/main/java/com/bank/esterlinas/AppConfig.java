@@ -2,8 +2,9 @@ package com.bank.esterlinas;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.beans.Account;
-import com.beans.User;
+
+import com.models.Account;
+import com.models.User;
 import com.services.bank.UserService;
 
 @Configuration

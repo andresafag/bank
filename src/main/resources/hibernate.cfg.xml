@@ -4,31 +4,18 @@
 <hibernate-configuration>
    <session-factory>
    
-      <property name = "hibernate.dialect">
-         org.hibernate.dialect.MySQLDialect
-      </property>
-      
-      <property name = "hibernate.connection.driver_class">
-         com.mysql.jdbc.Driver
-      </property>
-      
-      <!-- Assume test is the database name -->
-      
-      <property name = "hibernate.connection.url">
-         jdbc:mysql://localhost/bankdb
-      </property>
-      
-      <property name = "hibernate.connection.username">
-         root
-      </property>
-      
-      <property name = "hibernate.connection.password">
-         Ironman.12
-      </property>
+      <property name = "hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+      <property name = "hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+      <property name = "hibernate.connection.url">jdbc:mysql://localhost/bankdb</property>
+      <property name = "hibernate.connection.username">root</property>
+      <property name = "hibernate.connection.password">Ironman.12</property>
+      <property name="hbm2ddl.auto">update</property>
       
       <!-- List of XML mapping files -->
       
       <!-- <mapping resource = "Employee.hbm.xml"/> -->
+      <mapping class="com.models.User"></mapping>
+      <mapping class="com.models.Account"></mapping>
       
    </session-factory>
 </hibernate-configuration>

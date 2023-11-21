@@ -2,6 +2,8 @@ package com.views;
 
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -50,6 +52,9 @@ public class MainView implements ActionListener {
 				  System.out.println(usrService.verifyUser(fieldUsername.getText(),passwdField.getText()));
 				  if (usrService.verifyUser(fieldUsername.getText(),passwdField.getText()) == false) {
 					frame.dispose();
+					LoginScreen loginScreen = new LoginScreen();
+					loginScreen.main(args);
+					
 				  } else {
 					  alert.showMessageDialog(frame, "Please enter the right information",
 				               "User might not exist", JOptionPane.WARNING_MESSAGE);
@@ -65,8 +70,9 @@ public class MainView implements ActionListener {
 		panel.add(passwdLabel);
 		panel.add(passwdField);
 		panel.add(loginBtn);
-		
-		
+//		Image image = Toolkit.getDefaultToolkit().getImage("bank-clipart-cartoon-10.jpg");
+//		panel.drawImage(image, 0, 0, MainView);
+//		
 		//Container frame
 		frame.add(panel);
 		frame.setSize(500, 600);

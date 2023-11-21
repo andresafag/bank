@@ -6,6 +6,7 @@ public interface UserAuthentication {
 	
 	public boolean checkUser(String usrName, String psswd);
 
+	public int registerUser(String name, String lastName, String userName, String password);
 	
 	
 }

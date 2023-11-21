@@ -1,22 +1,28 @@
-package com.beans;
+package com.models;
 
+import java.util.List;
 
-import org.springframework.stereotype.Component;
-
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Value;
 
 @Entity
-@Component
+@Table(name="user")
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String lastName;
 	private String userName;
 	private String password;
+
 	
 	
 	public int getId() {
@@ -49,6 +55,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	
 	
 }
