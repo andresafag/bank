@@ -10,12 +10,13 @@
       <property name = "hibernate.connection.username">root</property>
       <property name = "hibernate.connection.password">Ironman.12</property>
       <property name="hbm2ddl.auto">update</property>
+      <property name="show_sql">true</property>
       
       <!-- List of XML mapping files -->
       
       <!-- <mapping resource = "Employee.hbm.xml"/> -->
       <mapping class="com.models.User"></mapping>
-      <mapping class="com.models.Account"></mapping>
+      <mapping class="com.models.PhoneInfo"></mapping>
       
    </session-factory>
 </hibernate-configuration>

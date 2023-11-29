@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class LoginScreen {
+public class Registration {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Welcome User");
 		

@@ -1,26 +1,26 @@
 package com.models;
 
 import java.math.BigInteger;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name="account")
-public class Account {
+@Table(name="phoneinfo")
+public class PhoneInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne
-	@JoinColumn(name = "account_id")
+	@OneToOne
+	@JoinColumn(name = "phone_id")
 	private User user;
-	private BigInteger accountNumber;
+	private BigInteger phoneNumber = new BigInteger("3002948499");
 	private long balance;
 	
 	
@@ -31,11 +31,11 @@ public class Account {
 		this.id = id;
 	}
 	
-	public BigInteger getAccountNumber() {
-		return accountNumber;
+	public BigInteger getphoneNumber() {
+		return phoneNumber;
 	}
-	public void setAccountNumber(BigInteger accountNumber) {
-		this.accountNumber = accountNumber;
+	public void setphoneNumber(BigInteger phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	public long getBalance() {
 		return balance;

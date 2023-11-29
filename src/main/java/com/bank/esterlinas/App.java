@@ -1,12 +1,6 @@
 package com.bank.esterlinas;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.dao.DaoAccount;
-import com.dao.DaoUser;
-import com.models.Account;
-import com.models.User;
 
 
 

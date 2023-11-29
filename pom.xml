@@ -40,6 +40,18 @@
     <artifactId>mysql-connector-j</artifactId>
     <version>8.1.0</version>
 </dependency>
+<dependency>
+    <groupId>org.asynchttpclient</groupId>
+    <artifactId>async-http-client</artifactId>
+    <version>2.12.3</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
+<dependency>
+    <groupId>com.twilio.sdk</groupId>
+    <artifactId>twilio</artifactId>
+    <version>9.14.0</version>
+</dependency>
 
 
   </dependencies>
