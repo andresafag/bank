@@ -9,7 +9,6 @@ import com.services.bank.UserService;
 public class AppConfig {
 	
 	
-	
 	@Bean
 	public User user() {
 		return new User();

@@ -14,8 +14,7 @@ public class UserService {
 		return daousr.checkUser(usrName, psswd);
 	}
 	
-	
-	
+
 	public String sendConfirmationSMS() {
 
 			 Twilio.init("ACce0a292656b36d6ab1bba58a271a1c21", "3a793270128388020a678faf110349ad");
@@ -27,7 +26,6 @@ public class UserService {
 
 		     System.out.println(message.getSid());
 		     return message.getSid();
-	
 	
 
 	}
