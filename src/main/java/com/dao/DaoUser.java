@@ -1,7 +1,5 @@
 package com.dao;
 
-import java.math.BigInteger;
-import java.util.Random;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.bank.interfaces.UserAuthentication;
 import com.models.PhoneInfo;
 import com.models.User;
-
 import org.hibernate.Transaction;
 
 
@@ -20,89 +17,88 @@ public class DaoUser implements UserAuthentication {
 	
 	
 	@Override
-	public int Authentication(String user, String password) {
-		  int res = 10;
+	public int saveNewUsr(String name, String lastName, String userName, String password, String phoneNumber) {
+		  int result = 0;
 		      
 		try {
-		   factory = new Configuration().configure().addAnnotatedClass(User.class).buildSessionFactory();
+		   SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		   Session session = factory.openSession();
 		   Transaction tx = session.beginTransaction();
-		    User usr = new User();
-		    usr.setName(user);
-		    usr.setPassword(password);
-		    res = (int) session.save(usr);
-		    tx.commit();
+		   long stringToNumbers = Long.parseLong(phoneNumber);
+		   
+			User usr = new User();
+	   	    PhoneInfo phone = new PhoneInfo();
+	   	    phone.setBalance(0);
+	   	    phone.setPhoneNumber(stringToNumbers);
+	   	    usr.setName(name);
+	   	    usr.setLastName(lastName);
+	   	    usr.setUserName(userName);
+	   	    usr.setPassword(password);
+	   	    phone.setUser(usr);
+	   	    session.save(usr);
+	   	    result = (int) session.save(phone);
+	   	    tx.commit();
+	   	    session.close();
 		} catch (Throwable ex) { 
 		   System.err.println("Failed to create sessionFactory object." + ex);
 		   throw new ExceptionInInitializerError(ex); 
 		}
 	
-		return res;
+		return result;
 	
 }
+	
+	
+	
+	
 
-
+	// This section verifies the user information and lets him/her in --------------------------------------------------------------------------------------------------
 	@Override
-	public boolean checkUser(String usrName, String psswd) {
-		factory = new Configuration().configure().addAnnotatedClass(User.class).buildSessionFactory();
+	public boolean checkUser(String phoneNumber, String psswd) {
+		long stringToNumbers = Long.parseLong(phoneNumber);
+//		factory = new Configuration().configure().addAnnotatedClass(User.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
-
-		
-		//HQL example - Get All Employees
 		Transaction tx = session.beginTransaction();
 		@SuppressWarnings("deprecation")
-		Query query = session.createQuery("FROM User S WHERE S.userName = '"+ usrName +"' AND S.password = '"+ psswd +"' ");
-		return query.list().isEmpty();
+		Query query = session.createQuery("FROM PhoneInfo P INNER JOIN P.user c ON c.id=P.id WHERE P.phoneNumber=:phonenumericValue AND c.password=:passwd");
+		query.setParameter("phonenumericValue", stringToNumbers);
+		query.setParameter("passwd", psswd);
+		return query.getResultList().isEmpty();
 	}
 
 	
 	
-
+	
+	
+	
 	@Override
-	public int registerUser(String name, String lastName, String userName, String password, BigInteger phoneNumber) {
-		int resu= 0;
-		int resi =  0;
-//		BigInteger max = new BigInteger("999999999999999999");
-//		BigInteger min = new BigInteger("100000000000000000");
-//		BigInteger bigInteger = max.subtract(min);
-//	    Random randNum = new Random();
-//	    int len = max.bitLength();
-//	    BigInteger res = new BigInteger(len, randNum);
-//	    if (res.compareTo(min) < 0) {
-//	         res = res.add(min);
-//	         }
-//	    if (res.compareTo(bigInteger) >= 0) {
-//	         res = res.mod(bigInteger).add(min);
-//	         System.out.println("The random BigInteger = "+res);
-//	   }
-	    
-	    User usr = new User();
-	    PhoneInfo phone = new PhoneInfo();
-	    phone.setBalance(0);
-	    phone.setphoneNumber(phoneNumber);
-	    
-	    usr.setName(name);
-	    usr.setLastName(lastName);
-	    usr.setUserName(userName);
-	    usr.setPassword(password);
-	    phone.setUser(usr);
-	 
-	    
+	public boolean checkUserPhoneNumber(String name, String lastName, String userName, String password, String phoneNumber) {
+		boolean result = false;
+		long phoneNumberConverted =  Long.parseLong(phoneNumber);
 	    try {
 	    	SessionFactory factory = new Configuration().configure().buildSessionFactory();
 	    	Session session = factory.openSession();
 		    Transaction tx = session.beginTransaction();
 		    
-		    resi = (int) session.save(usr);
-		    resu = (int) session.save(phone);
-		    System.out.println("resultado de resu " + resu);
-		    tx.commit();
-		    session.close();
+		    @SuppressWarnings("deprecation")
+			Query query = session.createQuery("FROM PhoneInfo P INNER JOIN P.user c ON c.id=P.id WHERE P.phoneNumber=:phonenumericValue");
+			query.setParameter("phonenumericValue", phoneNumberConverted);
+		    
+			if(query.getResultList().isEmpty() == true) {
+		    	result = query.getResultList().isEmpty();
+				System.out.println("No existe y puedes proceder");
+				
+		    } else {
+		    	System.out.println("ya existe el numero de telefono");
+		    }
+    
+		 
 	      } catch (Throwable ex) { 
 	         System.err.println("Failed to create sessionFactory object." + ex);
 	         throw new ExceptionInInitializerError(ex); 
 	      }
-		return resu;
+		return result;
 	}
 }
 

@@ -34,8 +34,7 @@ public class Login extends JFrame {
 			}
 		});
 	}
-	
-	
+
 	public Login() {
 		
 		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
@@ -43,8 +42,8 @@ public class Login extends JFrame {
 		JOptionPane alert = new JOptionPane();
 		
 		//Username section
-		JLabel usernameLabel =  new JLabel("Type in your username");
-		JTextField fieldUsername = new JTextField(10);
+		JLabel phoneNumberLabel =  new JLabel("Type in your phone number");
+		JTextField fieldPhoneNumber = new JTextField(10);
 		//Username section
 		JLabel passwdLabel =  new JLabel("Type in your password");
 		JPasswordField passwdField = new JPasswordField(10);
@@ -55,12 +54,12 @@ public class Login extends JFrame {
 		loginBtn.addActionListener(new ActionListener() { 
 			  @SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
-				  System.out.println("Your name is " + fieldUsername.getText() + " and your password is " + passwdField.getText());
-				  System.out.println(usrService.verifyUser(fieldUsername.getText(),passwdField.getText()));
-				  if (usrService.verifyUser(fieldUsername.getText(),passwdField.getText()) == false) {
+				  System.out.println("Your name is " + fieldPhoneNumber.getText() + " and your password is " + passwdField.getText());
+				  usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText());
+				  System.out.println(usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()));
+				  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
 					dispose();
-					new Registration();
-					
+					new LoggedIn();
 				  } else {
 					  alert.showMessageDialog(null,"Please enter the right information",
 				               "User might not exist", JOptionPane.WARNING_MESSAGE);
@@ -71,8 +70,8 @@ public class Login extends JFrame {
 		//Panel element
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel.add(usernameLabel);
-		panel.add(fieldUsername);
+		panel.add(phoneNumberLabel);
+		panel.add(fieldPhoneNumber);
 		panel.add(passwdLabel);
 		panel.add(passwdField);
 		panel.add(loginBtn);

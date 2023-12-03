@@ -54,6 +54,7 @@ public class MainView extends JFrame {
 		add(panel);
 		setSize(500, 600);
 		setVisible(true);
+		setTitle("MainView");
 		setLocationRelativeTo(null);
 	}
 	

@@ -2,6 +2,7 @@ package com.services.bank;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
+import java.util.Random;
 import org.springframework.stereotype.Service;
 import com.dao.DaoUser;
 
@@ -9,25 +10,41 @@ import com.dao.DaoUser;
 public class UserService {
 	
 	
-	public boolean verifyUser(String usrName, String psswd) {
+	public boolean verifyUser(String phoneNumber, String psswd) {
 		DaoUser daousr = new DaoUser();
-		return daousr.checkUser(usrName, psswd);
+		return daousr.checkUser(phoneNumber, psswd);
 	}
 	
 
-	public String sendConfirmationSMS() {
-
+	public String sendConfirmationSMS(String sendTo) {
+			 Random rand = new Random() ;
+			 int magicNumber = rand.nextInt() & Integer.MAX_VALUE;
+			 String magicNumberToString = String.valueOf(magicNumber);
 			 Twilio.init("ACce0a292656b36d6ab1bba58a271a1c21", "3a793270128388020a678faf110349ad");
+			 
 		     Message message = Message.creator(
-		             new com.twilio.type.PhoneNumber("+573002948499"),
-		             new com.twilio.type.PhoneNumber("+14156920545"),
-		             "Where's Wallace?")
+		             new com.twilio.type.PhoneNumber(String.format("+57%s", sendTo)),
+		             new com.twilio.type.PhoneNumber("+14156920545"),magicNumberToString)
 		         .create();
 
 		     System.out.println(message.getSid());
-		     return message.getSid();
+		     System.out.println("este es el numero " + magicNumberToString);
+		     
+		     return message.getSid() != null ? magicNumberToString : "0";
+//		     return "121212";
+		     
+	}
 	
-
+	public boolean checkPhoneNumber(String name, String lastName, String userName, String password, String phoneNumber) {
+		DaoUser daousr = new DaoUser();
+		return daousr.checkUserPhoneNumber(name, lastName, userName, password, phoneNumber);
+	}
+	
+	
+	
+	public int saveUsr(String name, String lastName, String userName, String password, String phoneNumber) {
+		DaoUser daousr = new DaoUser();
+		return daousr.saveNewUsr(name, lastName, userName, password, phoneNumber);
 	}
 	 
 	

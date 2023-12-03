@@ -1,14 +1,13 @@
 package com.bank.interfaces;
 
-import java.math.BigInteger;
 
 public interface UserAuthentication {
 	
-	public int Authentication(String user, String password);
+	public int saveNewUsr(String name, String lastName, String userName, String password, String phoneNumber);
 	
 	public boolean checkUser(String usrName, String psswd);
 
-	public int registerUser(String name, String lastName, String userName, String password, BigInteger phoneNumber);
+	public boolean checkUserPhoneNumber(String name, String lastName, String userName, String password, String phoneNumber);
 	
 	
 }

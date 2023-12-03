@@ -20,7 +20,7 @@ public class PhoneInfo {
 	@OneToOne
 	@JoinColumn(name = "phone_id")
 	private User user;
-	private BigInteger phoneNumber = new BigInteger("3002948499");
+	private long phoneNumber;
 	private long balance;
 	
 	
@@ -31,10 +31,10 @@ public class PhoneInfo {
 		this.id = id;
 	}
 	
-	public BigInteger getphoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setphoneNumber(BigInteger phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public long getBalance() {
@@ -49,6 +49,7 @@ public class PhoneInfo {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	
 	
 	
