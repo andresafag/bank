@@ -1,25 +1,28 @@
 package com.views;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class MainView extends JFrame {
+	
+	private ImageIcon icon;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					MainView frame = new MainView();
-					frame.setTitle("MainView");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -28,12 +31,22 @@ public class MainView extends JFrame {
 	}
 	
 	public MainView () {
+		icon = new ImageIcon(this.getClass().getResource("../../bank-clipart-cartoon-10.jpg"));
+		JLabel backgroundImage = new JLabel(icon);
+		backgroundImage.setSize(500, 600);
+		
+		
+		
+		
 		JPanel panel = new JPanel();
+		JPanel panelChild = new JPanel();
+		
 		JButton btnToLogin = new JButton("Login");
 		JButton btnToRegister = new JButton("Register");
-		panel.add(btnToRegister);
-		panel.add(btnToLogin);
-		panel.setBorder(BorderFactory.createTitledBorder("Welcome"));	
+		panelChild.add(btnToRegister);
+		panelChild.add(btnToLogin);
+		panelChild.setBorder(BorderFactory.createTitledBorder("Welcome"));
+		
 		
 		btnToLogin.addActionListener(new ActionListener() {
 			@Override
@@ -51,11 +64,19 @@ public class MainView extends JFrame {
 			}
 		});
 		
+
+	     
+		
+		add(backgroundImage);
 		add(panel);
+		panel.add(panelChild);
 		setSize(500, 600);
 		setVisible(true);
 		setTitle("MainView");
 		setLocationRelativeTo(null);
+		setResizable(false);
+		panelChild.setSize(200, 100);
+		backgroundImage.add(panelChild);
 	}
 	
 }

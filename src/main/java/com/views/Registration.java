@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +37,8 @@ public class Registration extends JFrame{
 	private JTextField phoneNumberField = new JTextField(10);
 	private JButton btn =  new JButton();
 	private JOptionPane warning = new JOptionPane();
+	private ImageIcon icon;
+	
 	
 	public static void main(String[] args) {
 		
@@ -50,12 +54,45 @@ public class Registration extends JFrame{
 	}
 	
 	public Registration() {
-			
+		icon = new ImageIcon(this.getClass().getResource("../../bank-clipart-cartoon-10.jpg"));
+		JLabel backgroundImage = new JLabel(icon);
+		backgroundImage.setSize(500, 600);
+		
 		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
 		UserService usrService = (UserService) appconfig.getBean(UserService.class);
-		//Panel element
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		//Main element
+		JPanel panelContainer = new JPanel();
+		JPanel elementPanel = new JPanel();
+		
+		
+		//Containers section
+		JPanel nameContainer = new JPanel();
+		JPanel lastNameContainer = new JPanel();
+		JPanel usernameContainer = new JPanel();
+		JPanel passwordContainer = new JPanel();
+		JPanel phoneNumberContainer = new JPanel();
+		
+		nameContainer.add(nameLabel);
+		nameContainer.add(nameField);
+		nameContainer.setLayout(new BoxLayout(nameContainer, BoxLayout.Y_AXIS));
+		
+		lastNameContainer.add(lastNameLabel);
+		lastNameContainer.add(lastNameField);
+		lastNameContainer.setLayout(new BoxLayout(lastNameContainer, BoxLayout.Y_AXIS));
+		
+		usernameContainer.add(usernameLabel);
+		usernameContainer.add(usernameField);
+		usernameContainer.setLayout(new BoxLayout(usernameContainer, BoxLayout.Y_AXIS));
+		
+		passwordContainer.add(passwdLabel);
+		passwordContainer.add(passwordField);
+		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
+		
+		phoneNumberContainer.add(PhoneNumberLabel);
+		phoneNumberContainer.add(phoneNumberField);
+		phoneNumberContainer.setLayout(new BoxLayout(phoneNumberContainer, BoxLayout.Y_AXIS));
+		
+		elementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		nameLabel.setText("Enter your first name: ");
 		lastNameLabel.setText("Enter your last name: ");
 		usernameLabel.setText("Enter a username: ");
@@ -63,60 +100,81 @@ public class Registration extends JFrame{
 		PhoneNumberLabel.setText("Enter your phone number: ");
 		btn.setText("Done");
 		
-		
 		btn.addActionListener(new ActionListener() {
-			
 			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("nombre " + nameField.getText() + " apellido " + lastNameField.getText() + " username " + usernameField.getText() + " contraseña " + passwordField.getText() + " numero de telefno " + phoneNumberField.getText());
-				if(usrService.checkPhoneNumber(nameField.getText(),lastNameField.getText(), usernameField.getText(), passwordField.getText(), phoneNumberField.getText()) ==  true) {
-					System.out.println("no existe ese numero");
-					String msgSent = usrService.sendConfirmationSMS(phoneNumberField.getText());
-					if(msgSent != "0") {
-						String inputValue = JOptionPane.showInputDialog("Please enter a the code sent to your phone");
-						if(msgSent.equalsIgnoreCase(inputValue)) {
-							dispose();
-							new Registered();
-							usrService.saveUsr(nameField.getText(), lastNameField.getText(), usernameField.getText(), passwordField.getText(), phoneNumberField.getText());
-						} else {
-							warning.showMessageDialog(null,"Wrong code",
-						               "Please enter the right code", JOptionPane.WARNING_MESSAGE);
+				try {
+					System.out.println("nombre " + nameField.getText() + " apellido " + lastNameField.getText() + " username " + usernameField.getText() + " contraseña " + passwordField.getText() + " numero de telefno " + phoneNumberField.getText());
+					if(usrService.checkPhoneNumber(nameField.getText(),lastNameField.getText(), usernameField.getText(), passwordField.getText(), phoneNumberField.getText()) ==  true) {
+						System.out.println("no existe ese numero");
+						String msgSent = usrService.sendConfirmationSMS(phoneNumberField.getText());
+						if(msgSent != "0") {
+							String inputValue = JOptionPane.showInputDialog("Please enter a the code sent to your phone");
+							if(msgSent.equalsIgnoreCase(inputValue)) {
+								dispose();
+								new MainView();
+								usrService.saveUsr(nameField.getText(), lastNameField.getText(), usernameField.getText(), passwordField.getText(), phoneNumberField.getText());
+							} else {
+								warning.showMessageDialog(null,"Wrong code",
+							               "Please enter the right code", JOptionPane.WARNING_MESSAGE);
+							}
+							
 						}
 						
+					} else {
+						System.out.println("ya existe ese numero");
+						warning.showMessageDialog(null,"That phone number is already stored in the database",
+					               "Phone number in used", JOptionPane.WARNING_MESSAGE);
 					}
 					
+				} catch (NumberFormatException e2) {
+					if( nameField.getText().length() == 0 && lastNameField.getText().length() == 0 && usernameField.getText().length() == 0 && phoneNumberField.getText().length() == 0 && phoneNumberField.getText().length() == 0) {
+						warning.showMessageDialog(null,"Please enter a something",
+								"No data entered", JOptionPane.WARNING_MESSAGE);
+					}
+					else if(lastNameField.getText().length() == 0) {
+						warning.showMessageDialog(null,"Please enter a last name",
+								"No phone number entered", JOptionPane.WARNING_MESSAGE);
+					}
+					else if(usernameField.getText().length() == 0) {
+						warning.showMessageDialog(null,"Please enter a username",
+								"No phone number entered", JOptionPane.WARNING_MESSAGE);
+					}
+					else if(passwordField.getText().length() == 0) {
+						warning.showMessageDialog(null,"Please enter a password",
+								"No phone number entered", JOptionPane.WARNING_MESSAGE);
+					}
+					else if(phoneNumberField.getText().length() == 0) {
+						warning.showMessageDialog(null,"Please enter a phone number",
+								"No phone number entered", JOptionPane.WARNING_MESSAGE);
+					}
+					else if(nameField.getText().length() == 0   ) {
+						warning.showMessageDialog(null,"Please enter a name",
+					               "No phone number entered", JOptionPane.WARNING_MESSAGE);
+					}
 					
-				} else {
-					System.out.println("ya existe ese numero");
-					warning.showMessageDialog(null,"That phone number is already stored in the database",
-				               "Phone number in used", JOptionPane.WARNING_MESSAGE);
 				}
-//				usrService.sendConfirmationSMS(phoneNumberField.getText());
 			}
 		});
 		
-		panel.add(nameLabel);
-		panel.add(nameField);
+		elementPanel.add(nameContainer);
+		elementPanel.add(lastNameContainer);
+		elementPanel.add(usernameContainer);
+		elementPanel.add(passwordContainer);
+		elementPanel.add(phoneNumberContainer);
+		elementPanel.add(btn);
 		
-		panel.add(lastNameLabel);
-		panel.add(lastNameField);	
-		
-		panel.add(usernameLabel);
-		panel.add(usernameField);	
-		
-		panel.add(passwdLabel);
-		panel.add(passwordField);
-		
-		panel.add(PhoneNumberLabel);
-		panel.add(phoneNumberField);
-		
-		panel.add(btn);
-			
-		add(panel);
+		add(backgroundImage);
+		add(panelContainer);
+		panelContainer.add(elementPanel);
 		setTitle("Registration");
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
+		setResizable(true);
+		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
+		elementPanel.setSize(600, 200);
+		backgroundImage.add(elementPanel);
 	}
 }
