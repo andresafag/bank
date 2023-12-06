@@ -68,11 +68,13 @@ public class Login extends JFrame {
 		//Button Element
 		JButton loginBtn = new JButton();
 		loginBtn.setText("Login");
-		btnContainer.add(loginBtn);
+		loginBtn.setSize(150, 50);
+		loginBtn.setLocation(160, 200);
+//		btnContainer.add(loginBtn);
 		
 		
 		loginBtn.addActionListener(new ActionListener() { 
-			  @SuppressWarnings({ "deprecation", "static-access" })
+			@SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
 				  try {
 					  System.out.println("Your name is " + fieldPhoneNumber.getText() + " and your password is " + passwdField.getText());
@@ -80,7 +82,8 @@ public class Login extends JFrame {
 					  System.out.println(usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()));
 					  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
 						dispose();
-						new LoggedIn();
+						usrService.retriveUsrInfo(fieldPhoneNumber.getText());
+						new LoggedIn("done","","");
 					  } else {
 						  alert.showMessageDialog(null,"Please enter the right information",
 					               "User might not exist", JOptionPane.WARNING_MESSAGE);
@@ -108,7 +111,7 @@ public class Login extends JFrame {
 		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.black));
 		elementsContainer.add(PhonenumberContainer);
 		elementsContainer.add(passwordContainer);
-		elementsContainer.add(btnContainer);
+//		elementsContainer.add(btnContainer);
 		panel.add(elementsContainer);
 
 
@@ -124,8 +127,10 @@ public class Login extends JFrame {
 		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
 		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
-		elementsContainer.setSize(420, 130);
+		elementsContainer.setSize(450, 130);
+		elementsContainer.setLocation(15, 10);
 		backgroundImage.add(elementsContainer);
+		backgroundImage.add(loginBtn);
 	}
 	
 }

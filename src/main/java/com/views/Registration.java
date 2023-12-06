@@ -99,6 +99,8 @@ public class Registration extends JFrame{
 		passwdLabel.setText("Enter a password: ");
 		PhoneNumberLabel.setText("Enter your phone number: ");
 		btn.setText("Done");
+		btn.setSize(150, 30);
+		btn.setLocation(170, 400);
 		
 		btn.addActionListener(new ActionListener() {
 			@SuppressWarnings("static-access")
@@ -163,18 +165,20 @@ public class Registration extends JFrame{
 		elementPanel.add(usernameContainer);
 		elementPanel.add(passwordContainer);
 		elementPanel.add(phoneNumberContainer);
-		elementPanel.add(btn);
+//		elementPanel.add(btn);
 		
 		add(backgroundImage);
 		add(panelContainer);
-		panelContainer.add(elementPanel);
+//		panelContainer.add(elementPanel);
+		elementPanel.setLocation(80, 10);
 		setTitle("Registration");
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(true);
 		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
-		elementPanel.setSize(600, 200);
+		elementPanel.setSize(300, 280);
 		backgroundImage.add(elementPanel);
+		backgroundImage.add(btn);
 	}
 }

@@ -1,5 +1,7 @@
 package com.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -99,6 +101,39 @@ public class DaoUser implements UserAuthentication {
 	         throw new ExceptionInInitializerError(ex); 
 	      }
 		return result;
+	}
+
+
+
+
+
+	@Override
+	public List<String> getUsrInfo(String phoneNumber) {
+		boolean result = false;
+		long phoneNumberConverted =  Long.parseLong(phoneNumber);
+		try {
+	    	SessionFactory factory = new Configuration().configure().buildSessionFactory();
+	    	Session session = factory.openSession();
+		    Transaction tx = session.beginTransaction();
+		    
+		    @SuppressWarnings("deprecation")
+			Query query = session.createQuery("SELECT P.phoneNumber,P.balance,c.name,c.lastName,cusername FROM PhoneInfo P INNER JOIN P.user c ON c.id=P.id WHERE P.phoneNumber=:phonenumericValue");
+			query.setParameter("phonenumericValue", phoneNumberConverted);
+		    
+			if(query.getResultList().isEmpty() == true) {
+		    	result = query.getResultList().isEmpty();
+				System.out.println("No existe y puedes proceder");
+				
+		    } else {
+		    	System.out.println("ya existe el numero de telefono");
+		    }
+    
+		 
+	      } catch (Throwable ex) { 
+	         System.err.println("Failed to create sessionFactory object." + ex);
+	         throw new ExceptionInInitializerError(ex); 
+	      }
+		return null;
 	}
 }
 

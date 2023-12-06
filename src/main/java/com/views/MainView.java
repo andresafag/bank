@@ -3,6 +3,8 @@ package com.views;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -31,7 +33,7 @@ public class MainView extends JFrame {
 	}
 	
 	public MainView () {
-		icon = new ImageIcon(this.getClass().getResource("../../bank-clipart-cartoon-10.jpg"));
+		icon = new ImageIcon(this.getClass().getResource("../../download.png"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
 		
@@ -46,6 +48,7 @@ public class MainView extends JFrame {
 		panelChild.add(btnToRegister);
 		panelChild.add(btnToLogin);
 		panelChild.setBorder(BorderFactory.createTitledBorder("Welcome"));
+		panelChild.setLocation(500, 500);
 		
 		
 		btnToLogin.addActionListener(new ActionListener() {
@@ -75,7 +78,7 @@ public class MainView extends JFrame {
 		setTitle("MainView");
 		setLocationRelativeTo(null);
 		setResizable(false);
-		panelChild.setSize(200, 100);
+//		panelChild.setSize(200, 100);
 		backgroundImage.add(panelChild);
 	}
 	

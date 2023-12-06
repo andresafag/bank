@@ -3,6 +3,8 @@ package com.services.bank;
 import com.twilio.Twilio;
 import com.twilio.exception.ApiException;
 import com.twilio.rest.api.v2010.account.Message;
+
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -55,6 +57,13 @@ public class UserService {
 	public int saveUsr(String name, String lastName, String userName, String password, String phoneNumber) {
 		DaoUser daousr = new DaoUser();
 		return daousr.saveNewUsr(name, lastName, userName, password, phoneNumber);
+	}
+	
+	
+	public List<String> retriveUsrInfo(String PhoneNumber) {
+		DaoUser daousr = new DaoUser();
+		daousr.getUsrInfo(PhoneNumber);
+		return null;
 	}
 	 
 	
