@@ -82,8 +82,7 @@ public class Login extends JFrame {
 					  System.out.println(usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()));
 					  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
 						dispose();
-						usrService.retriveUsrInfo(fieldPhoneNumber.getText());
-						new LoggedIn("done","","");
+						new LoggedIn(usrService.retriveUsrInfo(fieldPhoneNumber.getText()));
 					  } else {
 						  alert.showMessageDialog(null,"Please enter the right information",
 					               "User might not exist", JOptionPane.WARNING_MESSAGE);

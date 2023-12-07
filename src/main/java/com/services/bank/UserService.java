@@ -60,10 +60,9 @@ public class UserService {
 	}
 	
 	
-	public List<String> retriveUsrInfo(String PhoneNumber) {
+	public List<Object> retriveUsrInfo(String PhoneNumber) {
 		DaoUser daousr = new DaoUser();
-		daousr.getUsrInfo(PhoneNumber);
-		return null;
+		return daousr.getUsrInfo(PhoneNumber);
 	}
 	 
 	

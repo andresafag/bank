@@ -10,5 +10,5 @@ public interface UserAuthentication {
 
 	public boolean checkUserPhoneNumber(String name, String lastName, String userName, String password, String phoneNumber);
 	
-	public List<String> getUsrInfo(String PhoneNumber);
+	public List<Object> getUsrInfo(String PhoneNumber);
 }

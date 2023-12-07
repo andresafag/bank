@@ -1,15 +1,20 @@
 package com.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Repository;
+import com.bank.esterlinas.AppConfig;
 import com.bank.interfaces.UserAuthentication;
 import com.models.PhoneInfo;
 import com.models.User;
+
 import org.hibernate.Transaction;
 
 
@@ -27,9 +32,11 @@ public class DaoUser implements UserAuthentication {
 		   Session session = factory.openSession();
 		   Transaction tx = session.beginTransaction();
 		   long stringToNumbers = Long.parseLong(phoneNumber);
+			ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+			User usr = (User) appconfig.getBean(User.class);
+			PhoneInfo phone = (PhoneInfo) appconfig.getBean(PhoneInfo.class);
 		   
-			User usr = new User();
-	   	    PhoneInfo phone = new PhoneInfo();
+
 	   	    phone.setBalance(0);
 	   	    phone.setPhoneNumber(stringToNumbers);
 	   	    usr.setName(name);
@@ -104,28 +111,35 @@ public class DaoUser implements UserAuthentication {
 	}
 
 
-
-
-
+	
 	@Override
-	public List<String> getUsrInfo(String phoneNumber) {
+	public List<Object> getUsrInfo(String phoneNumber) {
+		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+		User usr = (User) appconfig.getBean(User.class);
+		PhoneInfo phone = (PhoneInfo) appconfig.getBean(PhoneInfo.class);
+		
 		boolean result = false;
 		long phoneNumberConverted =  Long.parseLong(phoneNumber);
+		List <Object> userInfo = new ArrayList<>();
 		try {
 	    	SessionFactory factory = new Configuration().configure().buildSessionFactory();
 	    	Session session = factory.openSession();
 		    Transaction tx = session.beginTransaction();
 		    
 		    @SuppressWarnings("deprecation")
-			Query query = session.createQuery("SELECT P.phoneNumber,P.balance,c.name,c.lastName,cusername FROM PhoneInfo P INNER JOIN P.user c ON c.id=P.id WHERE P.phoneNumber=:phonenumericValue");
+			Query query = session.createQuery("FROM PhoneInfo P INNER JOIN P.user c ON c.id=P.id WHERE P.phoneNumber=:phonenumericValue");
 			query.setParameter("phonenumericValue", phoneNumberConverted);
 		    
 			if(query.getResultList().isEmpty() == true) {
-		    	result = query.getResultList().isEmpty();
-				System.out.println("No existe y puedes proceder");
-				
+				System.out.println("los datos no están");
 		    } else {
-		    	System.out.println("ya existe el numero de telefono");
+		    	System.out.println("los datos están " + query.list());
+		    	phone = (PhoneInfo) query.uniqueResult();
+		    	userInfo.add(phone.getUser().getName());
+		    	userInfo.add(phone.getUser().getLastName());
+		    	userInfo.add(phone.getUser().getUserName());
+		    	userInfo.add(phone.getPhoneNumber());
+		    	userInfo.add(phone.getBalance());
 		    }
     
 		 
@@ -133,7 +147,7 @@ public class DaoUser implements UserAuthentication {
 	         System.err.println("Failed to create sessionFactory object." + ex);
 	         throw new ExceptionInInitializerError(ex); 
 	      }
-		return null;
+		return userInfo;
 	}
 }
 
