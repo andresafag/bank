@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.bank.esterlinas.AppConfig;
 import com.services.bank.UserService;
@@ -28,7 +29,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					new Login();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -73,6 +74,35 @@ public class Login extends JFrame {
 //		btnContainer.add(loginBtn);
 		
 		
+		
+		//Panel element
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.orange));
+		elementsContainer.add(PhonenumberContainer);
+		elementsContainer.add(passwordContainer);
+//		elementsContainer.add(btnContainer);
+		panel.add(elementsContainer);
+
+	
+		//Container frame
+		add(backgroundImage);
+		add(panel);
+		setSize(500, 600);
+		setVisible(true);
+		setTitle("Login");
+		setLocationRelativeTo(null);
+		setResizable(false);
+		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
+		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
+		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
+		elementsContainer.setSize(450, 200);
+		elementsContainer.setLocation(15, 10);
+		backgroundImage.add(elementsContainer);
+		backgroundImage.add(loginBtn);
+		
+		
+		
 		loginBtn.addActionListener(new ActionListener() { 
 			@SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
@@ -83,6 +113,7 @@ public class Login extends JFrame {
 					  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
 						dispose();
 						new LoggedIn(usrService.retriveUsrInfo(fieldPhoneNumber.getText()));
+						((ConfigurableApplicationContext)appconfig).close();
 					  } else {
 						  alert.showMessageDialog(null,"Please enter the right information",
 					               "User might not exist", JOptionPane.WARNING_MESSAGE);
@@ -104,32 +135,7 @@ public class Login extends JFrame {
 			  } 
 			});
 		
-		//Panel element
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.black));
-		elementsContainer.add(PhonenumberContainer);
-		elementsContainer.add(passwordContainer);
-//		elementsContainer.add(btnContainer);
-		panel.add(elementsContainer);
-
-
 	
-		//Container frame
-		add(backgroundImage);
-		add(panel);
-		setSize(500, 600);
-		setVisible(true);
-		setTitle("Login");
-		setLocationRelativeTo(null);
-		setResizable(false);
-		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
-		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
-		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
-		elementsContainer.setSize(450, 130);
-		elementsContainer.setLocation(15, 10);
-		backgroundImage.add(elementsContainer);
-		backgroundImage.add(loginBtn);
 	}
 	
 }

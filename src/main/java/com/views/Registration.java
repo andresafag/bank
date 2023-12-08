@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -15,11 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.text.Document;
-
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import com.bank.esterlinas.AppConfig;
 import com.services.bank.UserService;
 
@@ -45,7 +42,7 @@ public class Registration extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Registration frame = new Registration();
+					new Registration();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -102,6 +99,25 @@ public class Registration extends JFrame{
 		btn.setSize(150, 30);
 		btn.setLocation(170, 400);
 		
+		elementPanel.add(nameContainer);
+		elementPanel.add(lastNameContainer);
+		elementPanel.add(usernameContainer);
+		elementPanel.add(passwordContainer);
+		elementPanel.add(phoneNumberContainer);
+		
+		add(backgroundImage);
+		add(panelContainer);
+		elementPanel.setLocation(80, 10);
+		setTitle("Registration");
+		setSize(500, 600);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setResizable(true);
+		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
+		elementPanel.setSize(300, 280);
+		backgroundImage.add(elementPanel);
+		backgroundImage.add(btn);
+		
 		btn.addActionListener(new ActionListener() {
 			@SuppressWarnings("static-access")
 			@Override
@@ -117,6 +133,7 @@ public class Registration extends JFrame{
 								dispose();
 								new MainView();
 								usrService.saveUsr(nameField.getText(), lastNameField.getText(), usernameField.getText(), passwordField.getText(), phoneNumberField.getText());
+								((ConfigurableApplicationContext)appconfig).close();
 							} else {
 								warning.showMessageDialog(null,"Wrong code",
 							               "Please enter the right code", JOptionPane.WARNING_MESSAGE);
@@ -160,25 +177,6 @@ public class Registration extends JFrame{
 			}
 		});
 		
-		elementPanel.add(nameContainer);
-		elementPanel.add(lastNameContainer);
-		elementPanel.add(usernameContainer);
-		elementPanel.add(passwordContainer);
-		elementPanel.add(phoneNumberContainer);
-//		elementPanel.add(btn);
-		
-		add(backgroundImage);
-		add(panelContainer);
-//		panelContainer.add(elementPanel);
-		elementPanel.setLocation(80, 10);
-		setTitle("Registration");
-		setSize(500, 600);
-		setVisible(true);
-		setLocationRelativeTo(null);
-		setResizable(true);
-		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
-		elementPanel.setSize(300, 280);
-		backgroundImage.add(elementPanel);
-		backgroundImage.add(btn);
+
 	}
 }

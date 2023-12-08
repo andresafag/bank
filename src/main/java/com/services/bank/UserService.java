@@ -5,6 +5,7 @@ import com.twilio.exception.ApiException;
 import com.twilio.rest.api.v2010.account.Message;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -14,7 +15,6 @@ import com.dao.DaoUser;
 
 @Service
 public class UserService {
-	
 	
 	public boolean verifyUser(String phoneNumber, String psswd) {
 		DaoUser daousr = new DaoUser();
@@ -47,10 +47,15 @@ public class UserService {
 			 return messagingResult != null ? magicNumberToString : "0";
 	}
 	
+	
+	
+	
 	public boolean checkPhoneNumber(String name, String lastName, String userName, String password, String phoneNumber) {
 		DaoUser daousr = new DaoUser();
 		return daousr.checkUserPhoneNumber(name, lastName, userName, password, phoneNumber);
 	}
+	
+	
 	
 	
 	
@@ -60,7 +65,10 @@ public class UserService {
 	}
 	
 	
-	public List<Object> retriveUsrInfo(String PhoneNumber) {
+	
+	
+	
+	public Map<String,Object> retriveUsrInfo(String PhoneNumber) {
 		DaoUser daousr = new DaoUser();
 		return daousr.getUsrInfo(PhoneNumber);
 	}

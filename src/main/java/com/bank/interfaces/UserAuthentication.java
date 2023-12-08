@@ -1,6 +1,6 @@
 package com.bank.interfaces;
 
-import java.util.List;
+import java.util.Map;
 
 public interface UserAuthentication {
 	
@@ -10,5 +10,5 @@ public interface UserAuthentication {
 
 	public boolean checkUserPhoneNumber(String name, String lastName, String userName, String password, String phoneNumber);
 	
-	public List<Object> getUsrInfo(String PhoneNumber);
+	public Map<String,Object> getUsrInfo(String PhoneNumber);
 }

@@ -24,7 +24,7 @@ public class MainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainView frame = new MainView();
+					new MainView();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
