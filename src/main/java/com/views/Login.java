@@ -24,7 +24,22 @@ import com.services.bank.UserService;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
+	
 	private ImageIcon icon;
+	private JOptionPane alert = new JOptionPane();
+	private JPanel elementsContainer = new JPanel();
+	private JPanel PhonenumberContainer = new JPanel();
+	private JPanel passwordContainer = new JPanel();
+	private JPanel btnContainer = new JPanel();
+	private JLabel phoneNumberLabel =  new JLabel("Type in your phone number");
+	private JTextField fieldPhoneNumber = new JTextField();
+	private JLabel passwdLabel =  new JLabel("Type in your password");
+	private JPasswordField passwdField = new JPasswordField();
+	private JButton loginBtn = new JButton();
+	private JPanel panel = new JPanel();
+	
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,38 +60,24 @@ public class Login extends JFrame {
 		
 		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
 		UserService usrService = (UserService) appconfig.getBean(UserService.class);
-		JOptionPane alert = new JOptionPane();
+
 		
 		//Containers section
-		JPanel elementsContainer = new JPanel();
-		JPanel PhonenumberContainer = new JPanel();
-		JPanel passwordContainer = new JPanel();
-		JPanel btnContainer = new JPanel();
-		
-		//Username section
-		JLabel phoneNumberLabel =  new JLabel("Type in your phone number");
-		JTextField fieldPhoneNumber = new JTextField();
-		JLabel passwdLabel =  new JLabel("Type in your password");
-		JPasswordField passwdField = new JPasswordField();
-		
 		PhonenumberContainer.add(phoneNumberLabel);
 		PhonenumberContainer.add(fieldPhoneNumber);
-		
 		passwordContainer.add(passwdLabel);
 		passwordContainer.add(passwdField);
 		
 		
 		//Button Element
-		JButton loginBtn = new JButton();
 		loginBtn.setText("Login");
 		loginBtn.setSize(150, 50);
-		loginBtn.setLocation(160, 200);
+		loginBtn.setLocation(160, 250);
 //		btnContainer.add(loginBtn);
 		
 		
 		
 		//Panel element
-		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.orange));
 		elementsContainer.add(PhonenumberContainer);
@@ -102,7 +103,7 @@ public class Login extends JFrame {
 		backgroundImage.add(loginBtn);
 		
 		
-		
+		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		loginBtn.addActionListener(new ActionListener() { 
 			@SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 

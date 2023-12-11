@@ -19,6 +19,11 @@ import javax.swing.JButton;
 public class MainView extends JFrame {
 	
 	private ImageIcon icon;
+	private JPanel panel = new JPanel();
+	private JPanel panelChild = new JPanel();
+	private JButton btnToLogin = new JButton("Login");
+	private JButton btnToRegister = new JButton("Register");
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -37,20 +42,26 @@ public class MainView extends JFrame {
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
 		
-		
-		
-		
-		JPanel panel = new JPanel();
-		JPanel panelChild = new JPanel();
-		
-		JButton btnToLogin = new JButton("Login");
-		JButton btnToRegister = new JButton("Register");
 		panelChild.add(btnToRegister);
 		panelChild.add(btnToLogin);
 		panelChild.setBorder(BorderFactory.createTitledBorder("Welcome"));
 		panelChild.setLocation(500, 500);
 		
 		
+		
+		add(backgroundImage);
+		add(panel);
+		panel.add(panelChild);
+		setSize(500, 600);
+		setVisible(true);
+		setTitle("MainView");
+		setLocationRelativeTo(null);
+		setResizable(false);
+		backgroundImage.add(panelChild);
+		
+		
+		
+		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		btnToLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -68,18 +79,7 @@ public class MainView extends JFrame {
 		});
 		
 
-	     
-		
-		add(backgroundImage);
-		add(panel);
-		panel.add(panelChild);
-		setSize(500, 600);
-		setVisible(true);
-		setTitle("MainView");
-		setLocationRelativeTo(null);
-		setResizable(false);
-//		panelChild.setSize(200, 100);
-		backgroundImage.add(panelChild);
+	   
 	}
 	
 }

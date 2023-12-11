@@ -35,6 +35,14 @@ public class Registration extends JFrame{
 	private JButton btn =  new JButton();
 	private JOptionPane warning = new JOptionPane();
 	private ImageIcon icon;
+	private JPanel panelContainer = new JPanel();
+	private JPanel elementPanel = new JPanel();
+	private JPanel nameContainer = new JPanel();
+	private JPanel lastNameContainer = new JPanel();
+	private JPanel usernameContainer = new JPanel();
+	private JPanel passwordContainer = new JPanel();
+	private JPanel phoneNumberContainer = new JPanel();
+	
 	
 	
 	public static void main(String[] args) {
@@ -55,20 +63,9 @@ public class Registration extends JFrame{
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
 		
-		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
-		UserService usrService = (UserService) appconfig.getBean(UserService.class);
-		//Main element
-		JPanel panelContainer = new JPanel();
-		JPanel elementPanel = new JPanel();
-		
+
 		
 		//Containers section
-		JPanel nameContainer = new JPanel();
-		JPanel lastNameContainer = new JPanel();
-		JPanel usernameContainer = new JPanel();
-		JPanel passwordContainer = new JPanel();
-		JPanel phoneNumberContainer = new JPanel();
-		
 		nameContainer.add(nameLabel);
 		nameContainer.add(nameField);
 		nameContainer.setLayout(new BoxLayout(nameContainer, BoxLayout.Y_AXIS));
@@ -118,10 +115,15 @@ public class Registration extends JFrame{
 		backgroundImage.add(elementPanel);
 		backgroundImage.add(btn);
 		
+		
+		
+		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		btn.addActionListener(new ActionListener() {
 			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+				UserService usrService = (UserService) appconfig.getBean(UserService.class);
 				try {
 					System.out.println("nombre " + nameField.getText() + " apellido " + lastNameField.getText() + " username " + usernameField.getText() + " contraseña " + passwordField.getText() + " numero de telefno " + phoneNumberField.getText());
 					if(usrService.checkPhoneNumber(nameField.getText(),lastNameField.getText(), usernameField.getText(), passwordField.getText(), phoneNumberField.getText()) ==  true) {
