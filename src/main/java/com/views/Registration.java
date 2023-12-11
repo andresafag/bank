@@ -42,7 +42,7 @@ public class Registration extends JFrame{
 	private JPanel usernameContainer = new JPanel();
 	private JPanel passwordContainer = new JPanel();
 	private JPanel phoneNumberContainer = new JPanel();
-	
+	private JButton btnBck = new JButton("BACK");
 	
 	
 	public static void main(String[] args) {
@@ -59,34 +59,39 @@ public class Registration extends JFrame{
 	}
 	
 	public Registration() {
-		icon = new ImageIcon(this.getClass().getResource("../../bank-clipart-cartoon-10.jpg"));
+		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
-		
-
 		
 		//Containers section
 		nameContainer.add(nameLabel);
 		nameContainer.add(nameField);
 		nameContainer.setLayout(new BoxLayout(nameContainer, BoxLayout.Y_AXIS));
+		nameContainer.setOpaque(false);
 		
 		lastNameContainer.add(lastNameLabel);
 		lastNameContainer.add(lastNameField);
 		lastNameContainer.setLayout(new BoxLayout(lastNameContainer, BoxLayout.Y_AXIS));
+		lastNameContainer.setOpaque(false);
+		lastNameContainer.setOpaque(false);
 		
 		usernameContainer.add(usernameLabel);
 		usernameContainer.add(usernameField);
 		usernameContainer.setLayout(new BoxLayout(usernameContainer, BoxLayout.Y_AXIS));
+		usernameContainer.setOpaque(false);
 		
 		passwordContainer.add(passwdLabel);
 		passwordContainer.add(passwordField);
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
+		passwordContainer.setOpaque(false);
 		
 		phoneNumberContainer.add(PhoneNumberLabel);
 		phoneNumberContainer.add(phoneNumberField);
 		phoneNumberContainer.setLayout(new BoxLayout(phoneNumberContainer, BoxLayout.Y_AXIS));
+		phoneNumberContainer.setOpaque(false);
 		
-		elementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+//		elementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		elementPanel.setOpaque(false);
 		nameLabel.setText("Enter your first name: ");
 		lastNameLabel.setText("Enter your last name: ");
 		usernameLabel.setText("Enter a username: ");
@@ -102,19 +107,20 @@ public class Registration extends JFrame{
 		elementPanel.add(passwordContainer);
 		elementPanel.add(phoneNumberContainer);
 		
+		btnBck.setBounds(10, 10, 110, 50);
+		
 		add(backgroundImage);
-		add(panelContainer);
-		elementPanel.setLocation(80, 10);
+		elementPanel.setLocation(150, 150);
 		setTitle("Registration");
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(true);
 		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
-		elementPanel.setSize(300, 280);
+		elementPanel.setSize(210, 200);
 		backgroundImage.add(elementPanel);
 		backgroundImage.add(btn);
-		
+		backgroundImage.add(btnBck);
 		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -178,6 +184,15 @@ public class Registration extends JFrame{
 				}
 			}
 		});
+		
+		btnBck.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new MainView();
+			}
+		});
+		
 		
 
 	}

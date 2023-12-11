@@ -66,7 +66,7 @@ public class LoggedIn extends JFrame{
 		
 		
 		// Set the background
-		icon = new ImageIcon(this.getClass().getResource("../../bank-clipart-cartoon-10.jpg"));
+		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
 		
@@ -137,28 +137,39 @@ public class LoggedIn extends JFrame{
 			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int returnValue = 0;
 				String inputPhoneNumber = JOptionPane.showInputDialog("Please enter the phone number to transfer the money to");
 				
 				if (inputPhoneNumber.length() <= 0) {
-					JOptionPane.showMessageDialog(null, "alert", "alert", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Wrong input", "Enter an actual phone number", JOptionPane.ERROR_MESSAGE);
 					
 				} else {
 					String inputAmount = JOptionPane.showInputDialog("Please enter amount to transfer");
 					
+					
+					
+					
 					if (inputAmount.length() <= 0) {
-						JOptionPane.showMessageDialog(null, "alert", "alert", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "alert", "Enter the correct amount", JOptionPane.ERROR_MESSAGE);
+						inputAmount = "0";
 					} else {
 						@SuppressWarnings("resource")
 						ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
 						AccountService accntService = (AccountService) appconfig.getBean(AccountService .class);
+						returnValue =  accntService.transferMoney(inputPhoneNumber, phoneNumberString, inputAmount);
 						
-						
-						if (accntService.transferMoney(inputPhoneNumber, phoneNumberString, inputAmount) == -1) {
+						if (returnValue == -1) {
 							JOptionPane.showMessageDialog(null, "That number does not exist",  "Wrong information", JOptionPane.ERROR_MESSAGE);
-						} else if(accntService.transferMoney(inputPhoneNumber, phoneNumberString, inputAmount) > 0) {
-							JOptionPane.showMessageDialog(null, "You just transferred %s sucessfully".format(inputAmount),  "Done", JOptionPane.INFORMATION_MESSAGE);
+							returnValue=0;
+							
+						} else if(returnValue > 0) {
+							JOptionPane.showMessageDialog(null, String.format("You transferred successfully $%s", inputAmount),  "Done", JOptionPane.INFORMATION_MESSAGE);
+							
+							balanceLabel.setText(String.format("$%s",accntService.returnBalance(phoneNumberString)));
+							returnValue=0;
 						} else {
 							JOptionPane.showMessageDialog(null, "Your have insufficient funds" , "Error", JOptionPane.ERROR_MESSAGE);
+							returnValue=0;
 						}
 					}
 				}

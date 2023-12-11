@@ -37,7 +37,7 @@ public class Login extends JFrame {
 	private JPasswordField passwdField = new JPasswordField();
 	private JButton loginBtn = new JButton();
 	private JPanel panel = new JPanel();
-	
+	private JButton btnBck = new JButton("BACK");
 	
 	
 	public static void main(String[] args) {
@@ -54,7 +54,7 @@ public class Login extends JFrame {
 
 	public Login() {
 		
-		icon = new ImageIcon(this.getClass().getResource("../../bank-clipart-cartoon-10.jpg"));
+		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
 		
@@ -65,26 +65,29 @@ public class Login extends JFrame {
 		//Containers section
 		PhonenumberContainer.add(phoneNumberLabel);
 		PhonenumberContainer.add(fieldPhoneNumber);
+		PhonenumberContainer.setOpaque(false);
 		passwordContainer.add(passwdLabel);
 		passwordContainer.add(passwdField);
+		passwordContainer.setOpaque(false);
 		
 		
 		//Button Element
 		loginBtn.setText("Login");
-		loginBtn.setSize(150, 50);
-		loginBtn.setLocation(160, 250);
+		loginBtn.setSize(100, 50);
+		loginBtn.setLocation(200, 300);
 //		btnContainer.add(loginBtn);
 		
 		
 		
 		//Panel element
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.orange));
+		elementsContainer.setOpaque(false);
 		elementsContainer.add(PhonenumberContainer);
 		elementsContainer.add(passwordContainer);
 //		elementsContainer.add(btnContainer);
 		panel.add(elementsContainer);
-
+		
+		btnBck.setBounds(10, 10, 110, 50);
 	
 		//Container frame
 		add(backgroundImage);
@@ -97,10 +100,12 @@ public class Login extends JFrame {
 		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
 		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
-		elementsContainer.setSize(450, 200);
-		elementsContainer.setLocation(15, 10);
+		elementsContainer.setSize(190, 110);
+		elementsContainer.setLocation(150, 150);
 		backgroundImage.add(elementsContainer);
 		backgroundImage.add(loginBtn);
+		backgroundImage.add(btnBck);
+		
 		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -136,7 +141,13 @@ public class Login extends JFrame {
 			  } 
 			});
 		
-	
+		btnBck.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new MainView();
+			}
+		});
 	}
 	
 }

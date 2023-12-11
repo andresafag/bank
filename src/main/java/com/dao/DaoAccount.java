@@ -47,19 +47,22 @@ public class DaoAccount implements Money{
 		Long balanceForBeneficiary = phoneTo.getBalance() + stringToNumbersAmount;
 		Long balanceForWhoTransfers = phoneFrom.getBalance() - stringToNumbersAmount;
 			
+		System.out.println("El dinero que le queda al que transfiere" + balanceForWhoTransfers);
+		System.out.println("El dinero que le queda al que se le transfiere " + balanceForBeneficiary);
+		
 		@SuppressWarnings("deprecation")
 		Query TransferMoneyTo = session.createQuery("UPDATE PhoneInfo set balance= :balance where id= :id");
 		TransferMoneyTo.setParameter("balance", balanceForBeneficiary);
 		TransferMoneyTo.setParameter("id", phoneTo.getId());
 		res += TransferMoneyTo.executeUpdate();
+
 			
 		@SuppressWarnings("deprecation")
 		Query TransferMoneyFrom = session.createQuery("UPDATE PhoneInfo set balance= :balance where id= :id");
 		TransferMoneyFrom.setParameter("balance", balanceForWhoTransfers);
 		TransferMoneyFrom.setParameter("id", phoneFrom.getId());
-		res += TransferMoneyFrom.executeUpdate();
-		System.out.println(res);
-			
+		res +=  TransferMoneyFrom.executeUpdate();
+		
 		} else if (phoneFrom.getBalance() >= stringToNumbersAmount && queryTo.list().isEmpty()){
 			res = -1;
 		} else {
@@ -84,9 +87,31 @@ public class DaoAccount implements Money{
 	
 
 	@Override
-	public int checkBalance(int numero) {
-		// TODO Auto-generated method stub
-		return numero;
+	public Long checkBalance(String number) {
+		
+		Long phoneNumberLong = Long.parseLong(number);
+		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+		PhoneInfo phone = (PhoneInfo) appconfig.getBean(PhoneInfo.class);
+		
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		Session session = factory.openSession();
+		
+		@SuppressWarnings("deprecation")
+		Query query = session.createQuery("FROM PhoneInfo P INNER JOIN P.user c ON c.id=P.id WHERE P.phoneNumber=:phonenumericValue");
+		query.setParameter("phonenumericValue", phoneNumberLong);
+		
+		phone = (PhoneInfo) query.uniqueResult();
+		
+   	    session.close();
+		
+		
+		
+		return phone.getBalance();
 	}
 
 }
+
+
+
+
+

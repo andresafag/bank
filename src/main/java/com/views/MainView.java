@@ -23,7 +23,7 @@ public class MainView extends JFrame {
 	private JPanel panelChild = new JPanel();
 	private JButton btnToLogin = new JButton("Login");
 	private JButton btnToRegister = new JButton("Register");
-	
+	private JButton btnExit = new JButton("EXIT");
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -38,27 +38,29 @@ public class MainView extends JFrame {
 	}
 	
 	public MainView () {
-		icon = new ImageIcon(this.getClass().getResource("../../download.png"));
+		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
 		
 		panelChild.add(btnToRegister);
 		panelChild.add(btnToLogin);
 		panelChild.setBorder(BorderFactory.createTitledBorder("Welcome"));
-		panelChild.setLocation(500, 500);
-		
-		
+		panel.setSize(200, 100);
+		panel.setLocation(150, 200);
+//		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel.setOpaque(false);
+		panelChild.setOpaque(false);
+		btnExit.setBounds(10, 10, 60, 50);
 		
 		add(backgroundImage);
-		add(panel);
 		panel.add(panelChild);
 		setSize(500, 600);
 		setVisible(true);
 		setTitle("MainView");
 		setLocationRelativeTo(null);
 		setResizable(false);
-		backgroundImage.add(panelChild);
-		
+		backgroundImage.add(panel);
+		backgroundImage.add(btnExit);
 		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -75,6 +77,14 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new Registration();
+			}
+		});
+		
+		
+		btnExit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		

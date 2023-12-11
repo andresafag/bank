@@ -7,5 +7,5 @@ public interface Money {
 	
 	public int withdraw();
 		
-	public int checkBalance(int numero);
+	public Long checkBalance(String numero);
 }

@@ -12,4 +12,11 @@ public class AccountService {
 		DaoAccount daomoney = new DaoAccount();
 		return daomoney.transfer(transferTo,transferFrom,amount);
 	}
+	
+	public Long returnBalance(String transferFrom) {
+		DaoAccount daomoney = new DaoAccount();
+		return daomoney.checkBalance(transferFrom);
+	}
+	
+	
 }
