@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.bank.esterlinas.AppConfig;
@@ -146,14 +147,10 @@ public class LoggedIn extends JFrame{
 				} else {
 					String inputAmount = JOptionPane.showInputDialog("Please enter amount to transfer");
 					
-					
-					
-					
 					if (inputAmount.length() <= 0) {
 						JOptionPane.showMessageDialog(null, "alert", "Enter the correct amount", JOptionPane.ERROR_MESSAGE);
 						inputAmount = "0";
 					} else {
-						@SuppressWarnings("resource")
 						ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
 						AccountService accntService = (AccountService) appconfig.getBean(AccountService .class);
 						returnValue =  accntService.transferMoney(inputPhoneNumber, phoneNumberString, inputAmount);
@@ -171,6 +168,7 @@ public class LoggedIn extends JFrame{
 							JOptionPane.showMessageDialog(null, "Your have insufficient funds" , "Error", JOptionPane.ERROR_MESSAGE);
 							returnValue=0;
 						}
+						((ConfigurableApplicationContext)appconfig).close();
 					}
 				}
 			}
@@ -181,8 +179,32 @@ public class LoggedIn extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Sacar");
+				
+				ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+				UserService usrtService = (UserService) appconfig.getBean(UserService .class);
+				AccountService accntService = (AccountService) appconfig.getBean(AccountService .class);
+				
+				String sendConfirmationToWithdraw = usrtService.sendConfirmationSMS(phoneNumberString);
+				
+				if(!sendConfirmationToWithdraw.equals("0")) {
+					String inputConfirmationNumber = JOptionPane.showInputDialog("Please enter the number you were sent to your phone");
+					
+					if(inputConfirmationNumber.equals(sendConfirmationToWithdraw)) {
+						System.out.println("Same number");
+						String inputConfirmationAmount = JOptionPane.showInputDialog("Please enter the amount to withdraw");
+						
+						if (accntService.checkWithdrawalAmount(inputConfirmationAmount, phoneNumberString) > 0) {
+							JOptionPane.showMessageDialog(null, String.format("You withdrew successfully $%s", inputConfirmationAmount),  "Withdrawn", JOptionPane.INFORMATION_MESSAGE);
+							balanceLabel.setText(String.format("$%s",accntService.returnBalance(phoneNumberString)));
+						}
+					} 
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "That number does not match",  "Wrong number entered", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+				((ConfigurableApplicationContext)appconfig).close();
 			}
 		});
 		

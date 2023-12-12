@@ -5,7 +5,7 @@ public interface Money {
 	
 	public int transfer(String transferTo, String transferFrom, String amount);
 	
-	public int withdraw();
+	public int withdraw(String amount,String phoneNumber);
 		
 	public Long checkBalance(String numero);
 }

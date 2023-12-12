@@ -80,12 +80,48 @@ public class DaoAccount implements Money{
 	
 	
 	@Override
-	public int withdraw() {
-		// TODO Auto-generated method stub
-		return 07;
+	public int withdraw(String amount, String phoneNumber) {
+		//String to Long data type
+		int result = 0;
+		Long Amount = Long.parseLong(amount);
+		Long PhoneNumber = Long.parseLong(phoneNumber);
+		
+		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+		PhoneInfo phone = (PhoneInfo) appconfig.getBean(PhoneInfo.class);
+		//Initialize Session object
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		//Extracting the phoneInfo information
+		@SuppressWarnings("deprecation")
+		Query query = session.createQuery("FROM PhoneInfo P WHERE P.phoneNumber=:phonenumericValue");
+		query.setParameter("phonenumericValue", phoneNumber);
+		phone = (PhoneInfo) query.uniqueResult();
+		
+		System.out.println("El balance es " +  phone.getBalance() + " and the amount is " + Amount);
+		if (phone.getBalance() < Amount) {
+			result = 0;
+		} else {
+			Long withdrawAmount = phone.getBalance() - Amount;
+			@SuppressWarnings("deprecation")
+			Query withdraw = session.createQuery("UPDATE PhoneInfo set balance= :balance where id= :id");
+			withdraw.setParameter("balance", withdrawAmount);
+			withdraw.setParameter("id", phone.getId());
+			result = withdraw.executeUpdate();
+			
+
+		}
+		
+		tx.commit();
+   	    session.close();
+   	    ((ConfigurableApplicationContext)appconfig).close();
+		return result;
 	}
 	
 
+	
+	
 	@Override
 	public Long checkBalance(String number) {
 		
@@ -103,7 +139,7 @@ public class DaoAccount implements Money{
 		phone = (PhoneInfo) query.uniqueResult();
 		
    	    session.close();
-		
+   	    ((ConfigurableApplicationContext)appconfig).close();
 		
 		
 		return phone.getBalance();
