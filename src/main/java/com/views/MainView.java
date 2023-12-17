@@ -38,6 +38,7 @@ public class MainView extends JFrame {
 	}
 	
 	public MainView () {
+		setUndecorated(true);
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
@@ -54,13 +55,13 @@ public class MainView extends JFrame {
 		
 		add(backgroundImage);
 		panel.add(panelChild);
+		backgroundImage.add(panel);
+		backgroundImage.add(btnExit);
 		setSize(500, 600);
 		setVisible(true);
 		setTitle("MainView");
 		setLocationRelativeTo(null);
-		setResizable(false);
-		backgroundImage.add(panel);
-		backgroundImage.add(btnExit);
+		
 		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

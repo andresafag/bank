@@ -1,6 +1,7 @@
 package com.views;
 
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,8 @@ import com.services.bank.UserService;
 public class LoggedIn extends JFrame{
 	
 	private ImageIcon icon;
+	private ImageIcon usrIcon;
+	private ImageIcon bellIcon;
 	private JPanel usernameContainer = new JPanel();
 	private JButton btnUser = new JButton("icon del muñeco");
 	private JPanel notificationContainer = new JPanel();
@@ -38,6 +41,7 @@ public class LoggedIn extends JFrame{
 	private JButton btnWithdraw = new JButton("Withdraw");
 	private JLabel UsrnameLabel =  new JLabel();
 	private JLabel availableLabel = new JLabel("Available");
+	private JButton btnExit = new JButton("Logout");
 	
 	
 	public static void main(String[] args) {
@@ -54,7 +58,6 @@ public class LoggedIn extends JFrame{
 	}
 	
 	public LoggedIn(Map<String,Object> param) {
-		
 		String usrname = (String) param.get("username");
 		Long balanceNumber = (Long) param.get("balance");
 		String balanceString = String.valueOf(balanceNumber);
@@ -62,7 +65,6 @@ public class LoggedIn extends JFrame{
 		String lastName = (String) param.get("lastname");
 		Long phoneNumber = (Long) param.get("phonenumber");
 		String phoneNumberString = String.valueOf(phoneNumber);
-	
 		
 		
 		
@@ -74,39 +76,53 @@ public class LoggedIn extends JFrame{
 		
 		//Box containing the username items
 		usernameContainer.setOpaque(false);
-		btnUser.setSize(100, 50);
+		JLabel labelUsername = new JLabel();
+		usrIcon = new ImageIcon(this.getClass().getResource("../../user.png"));
+		labelUsername.setIcon(usrIcon);
+		
+		JLabel labelBell = new JLabel();
+		bellIcon= new ImageIcon(this.getClass().getResource("../../bell_icon.png"));
+		labelBell.setIcon(bellIcon);
+		
+//		label.setPreferredSize(new Dimension(128,128));
+//		btnUser.setSize(100, 50);
 		UsrnameLabel.setText(usrname);
+//		UsrnameLabel.setText("usrnamw");
 		Font labelFont = UsrnameLabel.getFont();
 		int fontSizeToUse = Math.min(20, 20);
 		UsrnameLabel.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
-		usernameContainer.add(btnUser);
+		usernameContainer.add(labelUsername);
 		usernameContainer.add(UsrnameLabel);
-		usernameContainer.setSize(200, 50);
-		usernameContainer.setBounds(20, 1, 150, 150);
+		usernameContainer.setSize(200, 150);
+		usernameContainer.setBounds(5, 5, 150, 180);
 		
 		//Box containing the notifications
 		notificationContainer.setOpaque(false);
 		btnNotification.setSize(50, 50);
-		notificationContainer.add(btnNotification);
+		notificationContainer.add(labelBell);
 		notificationContainer.setSize(150, 50);
-		notificationContainer.setBounds(370, 1, 100, 50);
+		notificationContainer.setBounds(370, 1, 100,200);
 
 		
 		//Box showing the money available
 		balanceContainer.setOpaque(false);
 		JLabel balanceLabel = new JLabel(String.format("$ %s",balanceString));
+//		JLabel balanceLabel = new JLabel(String.format("$ %s","10000"));
+
 //		balanceContainer.add(balanceLabel);
 //		balanceContainer.setBounds(200, 170, 50, 50);
 	
 		availableLabel.setBounds(200, 160, 100, 50);
-		balanceLabel.setBounds(210, 170, 50, 50);
+		availableLabel.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
+		balanceLabel.setBounds(200, 190, 200, 50);
+		balanceLabel.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
 		
 		
 		
 		//Box container to transactions
 		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
 		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-		transactionsContainer.setBorder( BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
+//		transactionsContainer.setBorder( BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
 		transactionsContainer.setSize(200, 200);
 		transactionsContainer.setBounds(100, 300, 250, 60);
 		transactionsContainer.setOpaque(false);
@@ -116,6 +132,8 @@ public class LoggedIn extends JFrame{
 		transactionsContainer.add(btnDeposit);
 		transactionsContainer.add(btnWithdraw);
 		
+		
+		btnExit.setBounds(5, 480, 150, 50);
 		
 		add(backgroundImage);
 		setSize(500, 600);
@@ -127,7 +145,7 @@ public class LoggedIn extends JFrame{
 		backgroundImage.add(availableLabel);
 		backgroundImage.add(balanceLabel);
 		backgroundImage.add(transactionsContainer);
-		
+		backgroundImage.add(btnExit);
 		
 		
 		
@@ -209,7 +227,12 @@ public class LoggedIn extends JFrame{
 		});
 		
 		
-		
+		btnExit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		
 		

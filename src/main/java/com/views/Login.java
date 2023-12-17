@@ -5,6 +5,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -53,7 +57,6 @@ public class Login extends JFrame {
 	}
 
 	public Login() {
-		
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
@@ -112,7 +115,9 @@ public class Login extends JFrame {
 		loginBtn.addActionListener(new ActionListener() { 
 			@SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
+				
 				  try {
+					  Long verifyString = Long.parseLong(fieldPhoneNumber.getText());
 					  System.out.println("Your name is " + fieldPhoneNumber.getText() + " and your password is " + passwdField.getText());
 					  usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText());
 					  System.out.println(usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()));
@@ -124,6 +129,7 @@ public class Login extends JFrame {
 						  alert.showMessageDialog(null,"Please enter the right information",
 					               "User might not exist", JOptionPane.WARNING_MESSAGE);
 					  }
+					 
 				} catch (NumberFormatException e2) {
 					if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() > 0) {
 						alert.showMessageDialog(null,"Please enter a number",
@@ -134,6 +140,8 @@ public class Login extends JFrame {
 					} else if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() == 0) {
 						alert.showMessageDialog(null,"Please enter something",
 					               "No data entered", JOptionPane.WARNING_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Enter only numbers in the username field" ,"ALERT" , JOptionPane.ERROR_MESSAGE);
 					}
 					
 					

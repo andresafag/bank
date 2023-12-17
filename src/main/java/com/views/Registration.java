@@ -100,7 +100,7 @@ public class Registration extends JFrame{
 		btn.setText("Done");
 		btn.setSize(150, 30);
 		btn.setLocation(170, 400);
-		
+//		
 		elementPanel.add(nameContainer);
 		elementPanel.add(lastNameContainer);
 		elementPanel.add(usernameContainer);
@@ -115,8 +115,7 @@ public class Registration extends JFrame{
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setResizable(true);
-		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
+//		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
 		elementPanel.setSize(210, 200);
 		backgroundImage.add(elementPanel);
 		backgroundImage.add(btn);
