@@ -3,12 +3,13 @@ package com.views;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -35,14 +36,17 @@ public class Login extends JFrame {
 	private JPanel PhonenumberContainer = new JPanel();
 	private JPanel passwordContainer = new JPanel();
 	private JPanel btnContainer = new JPanel();
-	private JLabel phoneNumberLabel =  new JLabel("Type in your phone number");
+	private JLabel phoneNumberLabel =  new JLabel("Phone number");
 	private JTextField fieldPhoneNumber = new JTextField();
-	private JLabel passwdLabel =  new JLabel("Type in your password");
+	private JLabel passwdLabel =  new JLabel("Password");
 	private JPasswordField passwdField = new JPasswordField();
 	private JButton loginBtn = new JButton();
+	private ImageIcon iconLogin = new ImageIcon(getClass().getResource("../../login.png"));
+	private Image imgLoginBtn = iconLogin.getImage();
 	private JPanel panel = new JPanel();
-	private JButton btnBck = new JButton("BACK");
-	
+	private JButton btnBck = new JButton();
+	private ImageIcon iconBckBtn = new ImageIcon(getClass().getResource("../../girar-a-la-izquierda.png"));
+	private Image imgBckBtn = iconBckBtn.getImage();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -60,24 +64,47 @@ public class Login extends JFrame {
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
+		btnBck.setOpaque(false);
+		btnBck.setBorderPainted(false);
+		btnBck.setContentAreaFilled(false);
+		loginBtn.setOpaque(false);
+		loginBtn.setBorderPainted(false);
+		loginBtn.setContentAreaFilled(false);
+		btnBck.setBounds(10, 10, 60, 60);
+		loginBtn.setSize(100, 100);
+		loginBtn.setLocation(190, 270);
 		
+		Image newImg = imgBckBtn.getScaledInstance(btnBck.getWidth(), btnBck.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImc = new ImageIcon(newImg);
+        btnBck.setIcon(newImc);
+        
+        Image newImgLogin = imgLoginBtn.getScaledInstance(loginBtn.getWidth(), loginBtn.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImcLogin = new ImageIcon(newImgLogin);
+        loginBtn.setIcon(newImcLogin);
+        
+        
+        
+        
 		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
 		UserService usrService = (UserService) appconfig.getBean(UserService.class);
 
 		
 		//Containers section
+		phoneNumberLabel.setFont(new Font("Ariel", Font.BOLD, 15));
+		phoneNumberLabel.setAlignmentX(CENTER_ALIGNMENT);
+		passwdLabel.setFont(new Font("Ariel", Font.BOLD, 15));
+		passwdLabel.setAlignmentX(CENTER_ALIGNMENT);
+		
 		PhonenumberContainer.add(phoneNumberLabel);
 		PhonenumberContainer.add(fieldPhoneNumber);
 		PhonenumberContainer.setOpaque(false);
+		
 		passwordContainer.add(passwdLabel);
 		passwordContainer.add(passwdField);
 		passwordContainer.setOpaque(false);
 		
 		
-		//Button Element
-		loginBtn.setText("Login");
-		loginBtn.setSize(100, 50);
-		loginBtn.setLocation(200, 300);
+
 //		btnContainer.add(loginBtn);
 		
 		
@@ -90,7 +117,7 @@ public class Login extends JFrame {
 //		elementsContainer.add(btnContainer);
 		panel.add(elementsContainer);
 		
-		btnBck.setBounds(10, 10, 110, 50);
+
 	
 		//Container frame
 		add(backgroundImage);

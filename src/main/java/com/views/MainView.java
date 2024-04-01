@@ -3,14 +3,25 @@ package com.views;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,12 +29,17 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class MainView extends JFrame {
 	
-	private ImageIcon icon;
+//	private ImageIcon icon;
 	private JPanel panel = new JPanel();
 	private JPanel panelChild = new JPanel();
 	private JButton btnToLogin = new JButton("Login");
 	private JButton btnToRegister = new JButton("Register");
-	private JButton btnExit = new JButton("EXIT");
+	private ImageIcon icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
+	private ImageIcon iconBtn = new ImageIcon(getClass().getResource("../../exit.png"));
+	private JLabel backgroundImage = new JLabel(icon);
+	private TitledBorder title;
+	private Image img = iconBtn.getImage();
+	private JButton btnExit = new JButton();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -37,21 +53,45 @@ public class MainView extends JFrame {
 		});
 	}
 	
-	public MainView () {
+	public MainView (){
 		setUndecorated(true);
-		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
-		JLabel backgroundImage = new JLabel(icon);
+		btnToLogin.setFont(new Font("Arial", Font.BOLD, 15));
+		btnToRegister.setFont(new Font("Arial", Font.BOLD, 15));
+		btnExit.setOpaque(false);
+		btnExit.setContentAreaFilled(false);
+		btnExit.setBorderPainted(false);
+		btnToLogin.setOpaque(false);
+		btnToLogin.setBorderPainted(false);
+		btnToLogin.setContentAreaFilled(false);
+		btnToRegister.setOpaque(false);
+		btnToRegister.setBorderPainted(false);
+		btnToRegister.setContentAreaFilled(false);
+		
+	
 		backgroundImage.setSize(500, 600);
+
+		title = BorderFactory.createTitledBorder("Welcome");
+		
+		title.setTitleFont(new Font("Arial", Font.BOLD, 30));
+		title.setTitleJustification(TitledBorder.CENTER);
+		Color colorTitle = new Color(10, 100, 80); 
+		title.setTitleColor(colorTitle);
 		
 		panelChild.add(btnToRegister);
 		panelChild.add(btnToLogin);
-		panelChild.setBorder(BorderFactory.createTitledBorder("Welcome"));
+		panelChild.setBorder(title);
 		panel.setSize(200, 100);
 		panel.setLocation(150, 200);
-//		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel.setOpaque(false);
 		panelChild.setOpaque(false);
-		btnExit.setBounds(10, 10, 60, 50);
+		btnExit.setBounds(20, 20, 60, 60);
+		
+		
+		Image newImg = img.getScaledInstance(btnExit.getWidth(), btnExit.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImc = new ImageIcon(newImg);
+        btnExit.setIcon(newImc);
+    
+		
 		
 		add(backgroundImage);
 		panel.add(panelChild);

@@ -29,17 +29,18 @@ public class UserService {
 			 String magicNumberToString = String.valueOf(magicNumber);
 			 Twilio.init("ACce0a292656b36d6ab1bba58a271a1c21", "3a793270128388020a678faf110349ad");
 			 
-			 try {
+			 try { 
+
 			     Message message = Message.creator(
 			             new com.twilio.type.PhoneNumber(String.format("+57%s", sendTo)),
-			             new com.twilio.type.PhoneNumber("+14156920545"),magicNumberToString)
+			             new com.twilio.type.PhoneNumber("+13103417569"),magicNumberToString)
 			         .create();
 			     System.out.println(message.getSid());
 			     System.out.println("este es el numero " + magicNumberToString);
 			     messagingResult = message.getSid();
 			     
 			} catch (ApiException e) {
-				System.out.println("pailas");
+				System.out.println(e);
 				JOptionPane.showMessageDialog(null,"Invalid phone number",
 			               "Please a valid phone number", JOptionPane.WARNING_MESSAGE);
 			}

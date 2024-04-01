@@ -2,6 +2,8 @@ package com.views;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -33,6 +35,8 @@ public class Registration extends JFrame{
 	private JPasswordField passwordField = new JPasswordField(10);
 	private JTextField phoneNumberField = new JTextField(10);
 	private JButton btn =  new JButton();
+	private ImageIcon iconDoneBtn = new ImageIcon(getClass().getResource("../../done.png"));
+	private Image imgDoneBtn = iconDoneBtn.getImage();
 	private JOptionPane warning = new JOptionPane();
 	private ImageIcon icon;
 	private JPanel panelContainer = new JPanel();
@@ -42,7 +46,9 @@ public class Registration extends JFrame{
 	private JPanel usernameContainer = new JPanel();
 	private JPanel passwordContainer = new JPanel();
 	private JPanel phoneNumberContainer = new JPanel();
-	private JButton btnBck = new JButton("BACK");
+	private JButton btnBck = new JButton();
+	private ImageIcon iconBckBtn = new ImageIcon(getClass().getResource("../../girar-a-la-izquierda.png"));
+	private Image imgBckBtn = iconBckBtn.getImage();
 	
 	
 	public static void main(String[] args) {
@@ -62,52 +68,82 @@ public class Registration extends JFrame{
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
+		btnBck.setOpaque(false);
+		btnBck.setBorderPainted(false);
+		btnBck.setContentAreaFilled(false);
+		btn.setOpaque(false);
+		btn.setBorderPainted(false);
+		btn.setContentAreaFilled(false);
+		
+		
+		btnBck.setBounds(15, 20, 60, 60);
+		btn.setText("Done");
+		btn.setSize(80, 80);
+		btn.setLocation(220, 380);
+		
+		
+		Image newImg = imgBckBtn.getScaledInstance(btnBck.getWidth(), btnBck.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImc = new ImageIcon(newImg);
+        btnBck.setIcon(newImc);
+        
+        Image newImgDone = imgDoneBtn.getScaledInstance(btn.getWidth(), btn.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImcDone = new ImageIcon(newImgDone);
+        btn.setIcon(newImcDone);
+        
+        
 		
 		//Containers section
+        nameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+        nameLabel.setAlignmentX(nameContainer.CENTER_ALIGNMENT);
 		nameContainer.add(nameLabel);
 		nameContainer.add(nameField);
 		nameContainer.setLayout(new BoxLayout(nameContainer, BoxLayout.Y_AXIS));
 		nameContainer.setOpaque(false);
 		
+		
+		lastNameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+		lastNameLabel.setAlignmentX(lastNameContainer.CENTER_ALIGNMENT);
 		lastNameContainer.add(lastNameLabel);
 		lastNameContainer.add(lastNameField);
 		lastNameContainer.setLayout(new BoxLayout(lastNameContainer, BoxLayout.Y_AXIS));
 		lastNameContainer.setOpaque(false);
 		lastNameContainer.setOpaque(false);
 		
+		usernameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+		usernameLabel.setAlignmentX(usernameContainer.CENTER_ALIGNMENT);
 		usernameContainer.add(usernameLabel);
 		usernameContainer.add(usernameField);
 		usernameContainer.setLayout(new BoxLayout(usernameContainer, BoxLayout.Y_AXIS));
 		usernameContainer.setOpaque(false);
 		
+		passwdLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+		passwdLabel.setAlignmentX(passwordContainer.CENTER_ALIGNMENT);
 		passwordContainer.add(passwdLabel);
 		passwordContainer.add(passwordField);
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
 		passwordContainer.setOpaque(false);
 		
+		PhoneNumberLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+		PhoneNumberLabel.setAlignmentX(phoneNumberContainer.CENTER_ALIGNMENT);
 		phoneNumberContainer.add(PhoneNumberLabel);
 		phoneNumberContainer.add(phoneNumberField);
 		phoneNumberContainer.setLayout(new BoxLayout(phoneNumberContainer, BoxLayout.Y_AXIS));
 		phoneNumberContainer.setOpaque(false);
 		
-//		elementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		elementPanel.setOpaque(false);
-		nameLabel.setText("Enter your first name: ");
-		lastNameLabel.setText("Enter your last name: ");
-		usernameLabel.setText("Enter a username: ");
-		passwdLabel.setText("Enter a password: ");
-		PhoneNumberLabel.setText("Enter your phone number: ");
-		btn.setText("Done");
-		btn.setSize(150, 30);
-		btn.setLocation(170, 400);
-//		
+		nameLabel.setText("First name: ");
+		lastNameLabel.setText("Last name: ");
+		usernameLabel.setText("Username: ");
+		passwdLabel.setText("Password: ");
+		PhoneNumberLabel.setText("Phone number:");
+
 		elementPanel.add(nameContainer);
 		elementPanel.add(lastNameContainer);
 		elementPanel.add(usernameContainer);
 		elementPanel.add(passwordContainer);
 		elementPanel.add(phoneNumberContainer);
 		
-		btnBck.setBounds(10, 10, 110, 50);
+
 		
 		add(backgroundImage);
 		elementPanel.setLocation(150, 150);
@@ -115,8 +151,7 @@ public class Registration extends JFrame{
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-//		elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
-		elementPanel.setSize(210, 200);
+		elementPanel.setSize(210, 250);
 		backgroundImage.add(elementPanel);
 		backgroundImage.add(btn);
 		backgroundImage.add(btnBck);
