@@ -3,13 +3,9 @@ package com.services.bank;
 import com.twilio.Twilio;
 import com.twilio.exception.ApiException;
 import com.twilio.rest.api.v2010.account.Message;
-
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import javax.swing.JOptionPane;
-
 import org.springframework.stereotype.Service;
 import com.dao.DaoUser;
 

@@ -1,6 +1,5 @@
 package com.models;
 
-import org.springframework.context.annotation.Scope;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

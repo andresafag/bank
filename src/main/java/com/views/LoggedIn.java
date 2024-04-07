@@ -2,7 +2,6 @@ package com.views;
 
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -17,12 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
-
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import com.bank.esterlinas.AppConfig;
 import com.services.bank.AccountService;
 import com.services.bank.UserService;
@@ -248,6 +244,7 @@ public class LoggedIn extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				new MainView();
 			}
 		});
 		
