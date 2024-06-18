@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -65,6 +67,7 @@ public class Registration extends JFrame{
 	}
 	
 	public Registration() {
+		
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
@@ -99,6 +102,10 @@ public class Registration extends JFrame{
 		nameContainer.add(nameField);
 		nameContainer.setLayout(new BoxLayout(nameContainer, BoxLayout.Y_AXIS));
 		nameContainer.setOpaque(false);
+		
+		
+	
+		
 		
 		
 		lastNameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
@@ -137,6 +144,7 @@ public class Registration extends JFrame{
 		passwdLabel.setText("Password: ");
 		PhoneNumberLabel.setText("Phone number:");
 
+
 		elementPanel.add(nameContainer);
 		elementPanel.add(lastNameContainer);
 		elementPanel.add(usernameContainer);
@@ -144,18 +152,20 @@ public class Registration extends JFrame{
 		elementPanel.add(phoneNumberContainer);
 		
 
-		
-		add(backgroundImage);
+		ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
+		Image symbol = mainIcon.getImage();
+		setIconImage(symbol);
 		elementPanel.setLocation(150, 150);
 		setTitle("Registration");
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		elementPanel.setSize(210, 250);
+//		elementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(backgroundImage);
 		backgroundImage.add(elementPanel);
 		backgroundImage.add(btn);
 		backgroundImage.add(btnBck);
-		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		btn.addActionListener(new ActionListener() {

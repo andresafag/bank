@@ -80,7 +80,9 @@ public class MainView extends JFrame {
         btnExit.setIcon(newImc);
     
 		
-		
+		ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
+		Image symbol = mainIcon.getImage();
+		setIconImage(symbol);
 		add(backgroundImage);
 		panel.add(panelChild);
 		backgroundImage.add(panel);

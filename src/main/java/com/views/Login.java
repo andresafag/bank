@@ -2,9 +2,13 @@ package com.views;
 
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,6 +24,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -61,6 +68,7 @@ public class Login extends JFrame {
 	}
 
 	public Login() {
+		setUndecorated(true);
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
 		JLabel backgroundImage = new JLabel(icon);
 		backgroundImage.setSize(500, 600);
@@ -102,13 +110,7 @@ public class Login extends JFrame {
 		passwordContainer.add(passwdLabel);
 		passwordContainer.add(passwdField);
 		passwordContainer.setOpaque(false);
-		
-		
 
-//		btnContainer.add(loginBtn);
-		
-		
-		
 		//Panel element
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		elementsContainer.setOpaque(false);
@@ -116,10 +118,13 @@ public class Login extends JFrame {
 		elementsContainer.add(passwordContainer);
 //		elementsContainer.add(btnContainer);
 		panel.add(elementsContainer);
-		
-
+//		
 	
+		
 		//Container frame
+		ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
+		Image symbol = mainIcon.getImage();
+		setIconImage(symbol);
 		add(backgroundImage);
 		add(panel);
 		setSize(500, 600);
@@ -127,15 +132,16 @@ public class Login extends JFrame {
 		setTitle("Login");
 		setLocationRelativeTo(null);
 		setResizable(false);
+		elementsContainer.setBorder(new EmptyBorder(10, 10, 10, 10));
 		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
 		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
-		elementsContainer.setSize(190, 110);
-		elementsContainer.setLocation(150, 150);
+		elementsContainer.setSize(250, 100);
+		elementsContainer.setLocation(100, 150);
 		backgroundImage.add(elementsContainer);
 		backgroundImage.add(loginBtn);
 		backgroundImage.add(btnBck);
-		
+
 		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,6 +189,7 @@ public class Login extends JFrame {
 				new MainView();
 			}
 		});
+		
 	}
 	
 }
