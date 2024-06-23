@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,6 +38,7 @@ public class LoggedIn extends JFrame{
 	private JPanel usernameContainer = new JPanel();
 	private JPanel notificationContainer = new JPanel();
 	private JButton btnNotification = new JButton("campana icono");
+	private JPanel panel =  new JPanel();
 	private JPanel transactionsContainer =  new JPanel();
 	private JButton btnDeposit = new JButton("Deposit");
 	private JButton btnWithdraw = new JButton("Withdraw");
@@ -61,6 +63,7 @@ public class LoggedIn extends JFrame{
 	}
 	
 	public LoggedIn(Map<String,Object> param) {
+		setUndecorated(true);
 		String usrname = (String) param.get("username");
 		Long balanceNumber = (Long) param.get("balance");
 		String balanceString = String.valueOf(balanceNumber);
@@ -68,11 +71,13 @@ public class LoggedIn extends JFrame{
 		String lastName = (String) param.get("lastname");
 		Long phoneNumber = (Long) param.get("phonenumber");
 		String phoneNumberString = String.valueOf(phoneNumber);
+		
+		
+//		String name = "andy";
+//		String lastName = "acosta";
 //		String phoneNumberString = "8888888888";
 //		String balanceString = "300";
 		UsrnameLabel.setText(usrname);
-		
-		
 		
 		// Set the background
 		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
@@ -112,7 +117,7 @@ public class LoggedIn extends JFrame{
 		btnNotification.setSize(50, 50);
 		notificationContainer.add(labelBell);
 		notificationContainer.setSize(150, 50);
-		notificationContainer.setBounds(370, 5, 100,200);
+		notificationContainer.setBounds(430, 5, 100,200);
 
 		
 		//Box showing the money available
@@ -123,15 +128,11 @@ public class LoggedIn extends JFrame{
 		balanceLabel.setBounds(200, 190, 300, 50);
 		balanceLabel.setFont(new Font("Ariel", Font.BOLD, 25));
 		
-		
-		
+			
 		//Box container to transactions
 		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
 		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
 //		transactionsContainer.setBorder( BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
-		transactionsContainer.setSize(200, 200);
-		transactionsContainer.setBounds(100, 300, 250, 60);
-		transactionsContainer.setOpaque(false);
 				
 		
 		//transactions buttons
@@ -143,24 +144,28 @@ public class LoggedIn extends JFrame{
 		btnWithdraw.setFont(new Font("Ariel", Font.BOLD, 20));
 		transactionsContainer.add(btnDeposit);
 		transactionsContainer.add(btnWithdraw);
-
-		
-
+		transactionsContainer.setLayout(new BoxLayout(transactionsContainer, BoxLayout.X_AXIS));
+		transactionsContainer.setOpaque(false);
+		panel.add(transactionsContainer);
+		panel.add(usernameContainer);
 		
 		add(backgroundImage);
+		add(panel);
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setTitle("LoggedIn");
+		transactionsContainer.setSize(200, 200);
+		transactionsContainer.setBounds(150,300,300,100);
+		usernameContainer.setBounds(0, 2, 300, 300);
+		backgroundImage.add(transactionsContainer);
 		backgroundImage.add(usernameContainer);
 		backgroundImage.add(notificationContainer);
 		backgroundImage.add(availableLabel);
 		backgroundImage.add(balanceLabel);
-		backgroundImage.add(transactionsContainer);
 		backgroundImage.add(btnExit);
 		
-		
-		
+
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		btnDeposit.addActionListener(new ActionListener() {

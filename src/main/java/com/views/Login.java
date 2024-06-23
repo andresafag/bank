@@ -112,15 +112,13 @@ public class Login extends JFrame {
 		passwordContainer.setOpaque(false);
 
 		//Panel element
-		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		elementsContainer.setOpaque(false);
 		elementsContainer.add(PhonenumberContainer);
 		elementsContainer.add(passwordContainer);
 //		elementsContainer.add(btnContainer);
 		panel.add(elementsContainer);
-//		
 	
-		
+	
 		//Container frame
 		ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
 		Image symbol = mainIcon.getImage();
@@ -132,7 +130,7 @@ public class Login extends JFrame {
 		setTitle("Login");
 		setLocationRelativeTo(null);
 		setResizable(false);
-		elementsContainer.setBorder(new EmptyBorder(10, 10, 10, 10));
+		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.black));
 		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
 		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
