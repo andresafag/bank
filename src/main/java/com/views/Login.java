@@ -11,6 +11,8 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +56,8 @@ public class Login extends JFrame {
 	private JButton btnBck = new JButton();
 	private ImageIcon iconBckBtn = new ImageIcon(getClass().getResource("../../girar-a-la-izquierda.png"));
 	private Image imgBckBtn = iconBckBtn.getImage();
+	private int xMouse = 0;
+	private int yMouse = 0;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -130,16 +134,41 @@ public class Login extends JFrame {
 		setTitle("Login");
 		setLocationRelativeTo(null);
 		setResizable(false);
-		elementsContainer.setBorder(BorderFactory.createLineBorder(Color.black));
+		elementsContainer.setBorder(BorderFactory.createEmptyBorder());
 		elementsContainer.setLayout(new BoxLayout(elementsContainer, BoxLayout.Y_AXIS));
 		PhonenumberContainer.setLayout(new BoxLayout(PhonenumberContainer, BoxLayout.Y_AXIS));
 		passwordContainer.setLayout(new BoxLayout(passwordContainer, BoxLayout.Y_AXIS));
 		elementsContainer.setSize(250, 100);
-		elementsContainer.setLocation(100, 150);
+		elementsContainer.setLocation(120, 150);
 		backgroundImage.add(elementsContainer);
 		backgroundImage.add(loginBtn);
 		backgroundImage.add(btnBck);
 
+		
+		//Barra para controlar la ventana 
+		JPanel header = new JPanel();
+		header.setBounds(0, 0, 500, 10);
+		header.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				headerMouseDragged(e);
+			}
+		});
+		
+		
+		
+	
+		header.setLayout(null);
+		header.setBackground(new Color(0,0,0,0));
+		backgroundImage.add(header);
+		
 		
 		
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -189,5 +218,10 @@ public class Login extends JFrame {
 		});
 		
 	}
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+}
 	
 }

@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -53,7 +56,8 @@ public class Registration extends JFrame{
 	private JButton btnBck = new JButton();
 	private ImageIcon iconBckBtn = new ImageIcon(getClass().getResource("../../girar-a-la-izquierda.png"));
 	private Image imgBckBtn = iconBckBtn.getImage();
-
+	private int xMouse = 0;
+	private int yMouse = 0;
 
 	
 	
@@ -124,7 +128,6 @@ public class Registration extends JFrame{
 			nameContainer.add(nameField);
 			nameContainer.setLayout(new BoxLayout(nameContainer, BoxLayout.Y_AXIS));
 			nameContainer.setOpaque(false);
-			nameContainer.setBorder(BorderFactory.createLineBorder(Color.black));
 			
 	
 			lastNameContainer.add(lastNameLabel);
@@ -176,7 +179,7 @@ public class Registration extends JFrame{
 			setVisible(true);
 			setLocationRelativeTo(null);
 			elementPanel.setLayout(new BoxLayout(elementPanel, BoxLayout.Y_AXIS));
-			elementPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			elementPanel.setBorder(BorderFactory.createEmptyBorder());
 			elementPanel.setSize(210, 250);
 			elementPanel.setLocation(150, 150);
 			backgroundImage.add(elementPanel);
@@ -184,6 +187,31 @@ public class Registration extends JFrame{
 			backgroundImage.add(btnBck);
 
 	
+			//Barra para controlar la ventana 
+			JPanel header = new JPanel();
+			header.setBounds(0, 0, 500, 10);
+			
+			
+			header.addMouseMotionListener(new MouseMotionListener() {
+				
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					headerMouseDragged(e);
+				}
+			});
+			
+			
+			
+		
+			header.setLayout(null);
+			header.setBackground(new Color(0,0,0,0));
+			backgroundImage.add(header);
 
 
 		
@@ -257,7 +285,11 @@ public class Registration extends JFrame{
 			}
 		});
 		
-		
-
 	}
+	
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+}
 }

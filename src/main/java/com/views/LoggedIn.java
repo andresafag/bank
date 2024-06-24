@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -47,7 +49,8 @@ public class LoggedIn extends JFrame{
 	private JButton btnExit = new JButton();
 	private ImageIcon exitIcon = new ImageIcon(getClass().getResource("../../logout2.png"));
 	private Image exitImage = exitIcon.getImage();
-	
+	private int xMouse = 0;
+	private int yMouse = 0;
 	
 	public static void main(String[] args) {
 		
@@ -149,6 +152,10 @@ public class LoggedIn extends JFrame{
 		panel.add(transactionsContainer);
 		panel.add(usernameContainer);
 		
+		
+		ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
+		Image symbol = mainIcon.getImage();
+		setIconImage(symbol);
 		add(backgroundImage);
 		add(panel);
 		setSize(500, 600);
@@ -166,7 +173,30 @@ public class LoggedIn extends JFrame{
 		backgroundImage.add(btnExit);
 		
 
-		
+		//Barra para controlar la ventana 
+				JPanel header = new JPanel();
+				header.setBounds(0, 0, 500, 10);
+				header.addMouseMotionListener(new MouseMotionListener() {
+					
+					@Override
+					public void mouseMoved(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						headerMouseDragged(e);
+					}
+				});
+				
+				
+				
+			
+				header.setLayout(null);
+				header.setBackground(new Color(0,0,0,0));
+				backgroundImage.add(header);
+				
 		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		btnDeposit.addActionListener(new ActionListener() {
 			
@@ -252,9 +282,12 @@ public class LoggedIn extends JFrame{
 				new MainView();
 			}
 		});
-		
-		
-		
+	
 		
 	}
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+}
 }
