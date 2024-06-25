@@ -30,7 +30,8 @@ import com.services.bank.UserService;
 @SuppressWarnings("serial")
 public class LoggedIn extends JFrame{
 	
-	private ImageIcon icon;
+	private ImageIcon icon = new ImageIcon(this.getClass().getResource("../../seamless-money.jpg"));
+	private JLabel backgroundImage = new JLabel();
 	private JLabel labelUsername = new JLabel();
 	private ImageIcon usrIcon = new ImageIcon(getClass().getResource("../../user.png"));
 	private Image usrImg = usrIcon.getImage();
@@ -81,11 +82,14 @@ public class LoggedIn extends JFrame{
 //		String phoneNumberString = "8888888888";
 //		String balanceString = "300";
 		UsrnameLabel.setText(usrname);
+		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 20));
+		UsrnameLabel.setForeground(new Color(102-255-102));
 		
 		// Set the background
-		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
-		JLabel backgroundImage = new JLabel(icon);
-		backgroundImage.setSize(500, 600);
+		backgroundImage.setSize(500,600);
+		Image nnn = icon.getImage().getScaledInstance(backgroundImage.getWidth(), backgroundImage.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon nn = new ImageIcon(nnn);
+		backgroundImage.setIcon(nn);
 		
 		
 		//Box containing the username items
@@ -110,7 +114,7 @@ public class LoggedIn extends JFrame{
         btnExit.setIcon(newImcLogout);
 		
 
-		UsrnameLabel.setFont(new Font("Ariel", Font.BOLD, 15));
+		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		usernameContainer.add(labelUsername);
 		usernameContainer.add(UsrnameLabel);
 		usernameContainer.setBounds(5, 5, 90, 100);
@@ -123,13 +127,14 @@ public class LoggedIn extends JFrame{
 		notificationContainer.setBounds(430, 5, 100,200);
 
 		
-		//Box showing the money available
+		//Box showing the money availables
 		JLabel balanceLabel = new JLabel(String.format("$ %s",balanceString));
 		availableLabel.setBounds(200, 160, 200, 50);
-		availableLabel.setFont(new Font("Ariel", Font.BOLD, 25));
-		availableLabel.setForeground(new Color(100, 180, 80));
+		availableLabel.setFont(new Font("Algerian", Font.BOLD, 25));
+		availableLabel.setForeground(new Color(102-255-102));
 		balanceLabel.setBounds(200, 190, 300, 50);
-		balanceLabel.setFont(new Font("Ariel", Font.BOLD, 25));
+		balanceLabel.setForeground(new Color(200-255-204));
+		balanceLabel.setFont(new Font("Alegerian", Font.BOLD, 25));
 		
 			
 		//Box container to transactions
@@ -139,10 +144,10 @@ public class LoggedIn extends JFrame{
 				
 		
 		//transactions buttons
-		btnDeposit.setBackground(new Color(100, 180, 80));
+		btnDeposit.setBackground(new Color(102-255-102));
 		btnDeposit.setForeground(Color.black);
 		btnDeposit.setFont(new Font("Ariel", Font.BOLD, 20));
-		btnWithdraw.setBackground(new Color(100, 180, 80));
+		btnWithdraw.setBackground(new Color(102-255-102));
 		btnWithdraw.setForeground(Color.black);
 		btnWithdraw.setFont(new Font("Ariel", Font.BOLD, 20));
 		transactionsContainer.add(btnDeposit);

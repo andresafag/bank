@@ -25,14 +25,14 @@ public class MainView extends JFrame {
 	private JPanel panelChild = new JPanel();
 	private JButton btnToLogin = new JButton("Login");
 	private JButton btnToRegister = new JButton("Register");
-	private ImageIcon icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
+	private ImageIcon icon = new ImageIcon(this.getClass().getResource("../../seamless-money.jpg"));
 	private ImageIcon iconBtn = new ImageIcon(getClass().getResource("../../exit.png"));
-	private JLabel backgroundImage = new JLabel(icon);
+	private JLabel backgroundImage = new JLabel();
 	private TitledBorder title;
 	private Image img = iconBtn.getImage();
 	private JButton btnExit = new JButton();
-	private int xMouse = 0;
-	private int yMouse = 0;
+	private int xMouse, yMouse;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,26 +47,32 @@ public class MainView extends JFrame {
 	
 	public MainView (){
 		setUndecorated(true);
-		btnToLogin.setFont(new Font("Arial", Font.BOLD, 15));
-		btnToRegister.setFont(new Font("Arial", Font.BOLD, 15));
+		btnToLogin.setFont(new Font("Arial", Font.BOLD, 20));
+		btnToRegister.setFont(new Font("Arial", Font.BOLD, 20));
 		btnExit.setOpaque(false);
 		btnExit.setContentAreaFilled(false);
 		btnExit.setBorderPainted(false);
 		btnToLogin.setOpaque(false);
+		btnToLogin.setForeground(new Color(200-255-204));
 		btnToLogin.setBorderPainted(false);
 		btnToLogin.setContentAreaFilled(false);
+		btnToRegister.setForeground(new Color(200-255-204));
 		btnToRegister.setOpaque(false);
 		btnToRegister.setBorderPainted(false);
 		btnToRegister.setContentAreaFilled(false);
 		
-	
-		backgroundImage.setSize(500, 600);
+		
+		backgroundImage.setSize(500,600);
+		Image nnn = icon.getImage().getScaledInstance(backgroundImage.getWidth(), backgroundImage.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon nn = new ImageIcon(nnn);
+		backgroundImage.setIcon(nn);
 
+		
 		title = BorderFactory.createTitledBorder("Welcome");
 		
-		title.setTitleFont(new Font("Arial", Font.BOLD, 30));
+		title.setTitleFont(new Font("Serif", Font.BOLD, 30));
 		title.setTitleJustification(TitledBorder.CENTER);
-		Color colorTitle = new Color(10, 100, 80); 
+		Color colorTitle = new Color(102-255-102); 
 		title.setTitleColor(colorTitle);
 		
 		panelChild.add(btnToRegister);
@@ -147,9 +153,6 @@ public class MainView extends JFrame {
 				dispose();
 			}
 		});
-		
-
-	   
 	}
 	
 	

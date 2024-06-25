@@ -30,7 +30,8 @@ import com.services.bank.UserService;
 @SuppressWarnings("serial")
 public class Registration extends JFrame{
 	
-	private ImageIcon icon;
+	private ImageIcon icon = new ImageIcon(this.getClass().getResource("../../seamless-money.jpg"));
+	private JLabel backgroundImage = new JLabel();
 	private JPanel elementPanel = new JPanel();
 	private JPanel panelContainer = new JPanel();
 	private JPanel lastNameContainer = new JPanel();
@@ -75,11 +76,12 @@ public class Registration extends JFrame{
 	}
 	
 	public Registration() {
-		
 			setUndecorated(true);
-		// below is the background image and its properties
-			icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
-			JLabel backgroundImage = new JLabel(icon);
+				// Set the background
+			backgroundImage.setSize(500,600);
+			Image nnn = icon.getImage().getScaledInstance(backgroundImage.getWidth(), backgroundImage.getHeight(), Image.SCALE_SMOOTH);
+			ImageIcon nn = new ImageIcon(nnn);
+			backgroundImage.setIcon(nn);
 			backgroundImage.setSize(500, 600);
 			
 			// these are the back and done buttons represented as icons along with their properties
@@ -106,19 +108,24 @@ public class Registration extends JFrame{
 	        
 			
 			//Containers section
-	        nameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+	        nameLabel.setFont(new Font("Algerian",  Font.BOLD, 22));
+	        nameLabel.setForeground(new Color(102-255-102));
 	        nameLabel.setAlignmentX(nameContainer.CENTER_ALIGNMENT);
 	
-			lastNameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+			lastNameLabel.setFont(new Font("Algerian",  Font.BOLD, 22));
+			lastNameLabel.setForeground(new Color(102-255-102));
 			lastNameLabel.setAlignmentX(lastNameContainer.CENTER_ALIGNMENT);
 	        
-			usernameLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+			usernameLabel.setFont(new Font("Algerian",  Font.BOLD, 22));
+			usernameLabel.setForeground(new Color(102-255-102));
 			usernameLabel.setAlignmentX(usernameContainer.CENTER_ALIGNMENT);	        
 	        
-			passwdLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+			passwdLabel.setFont(new Font("Algerian",  Font.BOLD, 22));
+			passwdLabel.setForeground(new Color(102-255-102));
 			passwdLabel.setAlignmentX(passwordContainer.CENTER_ALIGNMENT);
 
-			PhoneNumberLabel.setFont(new Font("Arial",  Font.BOLD, 15));
+			PhoneNumberLabel.setFont(new Font("Algerian",  Font.BOLD, 22));
+			PhoneNumberLabel.setForeground(new Color(102-255-102));
 			PhoneNumberLabel.setAlignmentX(phoneNumberContainer.CENTER_ALIGNMENT);
 			
 			
@@ -152,11 +159,11 @@ public class Registration extends JFrame{
 			phoneNumberContainer.setOpaque(false);
 			
 			
-			nameLabel.setText("First name: ");
-			lastNameLabel.setText("Last name: ");
-			usernameLabel.setText("Username: ");
-			passwdLabel.setText("Password: ");
-			PhoneNumberLabel.setText("Phone number:");
+			nameLabel.setText("First name");
+			lastNameLabel.setText("Last name");
+			usernameLabel.setText("Username");
+			passwdLabel.setText("Password");
+			PhoneNumberLabel.setText("Phone number");
 
 
 			elementPanel.setOpaque(false);

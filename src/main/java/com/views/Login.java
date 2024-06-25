@@ -39,7 +39,8 @@ import com.services.bank.UserService;
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 	
-	private ImageIcon icon;
+	private ImageIcon icon = new ImageIcon(this.getClass().getResource("../../seamless-money.jpg"));
+	private JLabel backgroundImage = new JLabel();
 	private JOptionPane alert = new JOptionPane();
 	private JPanel elementsContainer = new JPanel();
 	private JPanel PhonenumberContainer = new JPanel();
@@ -55,9 +56,9 @@ public class Login extends JFrame {
 	private JPanel panel = new JPanel();
 	private JButton btnBck = new JButton();
 	private ImageIcon iconBckBtn = new ImageIcon(getClass().getResource("../../girar-a-la-izquierda.png"));
-	private Image imgBckBtn = iconBckBtn.getImage();
-	private int xMouse = 0;
-	private int yMouse = 0;
+	private Image imgBckBtn = iconBckBtn.getImage();	
+	private ImageIcon gifIcon = new ImageIcon(getClass().getResource("../../loading.gif"));
+	private int xMouse,yMouse;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -73,9 +74,6 @@ public class Login extends JFrame {
 
 	public Login() {
 		setUndecorated(true);
-		icon = new ImageIcon(this.getClass().getResource("../../money-sign-pictures-gj4uo9l9ql4duys6.jpg"));
-		JLabel backgroundImage = new JLabel(icon);
-		backgroundImage.setSize(500, 600);
 		btnBck.setOpaque(false);
 		btnBck.setBorderPainted(false);
 		btnBck.setContentAreaFilled(false);
@@ -86,6 +84,17 @@ public class Login extends JFrame {
 		loginBtn.setSize(100, 100);
 		loginBtn.setLocation(190, 270);
 		
+		// Set the background
+		backgroundImage.setSize(500,600);
+		Image nnn = icon.getImage().getScaledInstance(backgroundImage.getWidth(), backgroundImage.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon nn = new ImageIcon(nnn);
+		backgroundImage.setIcon(nn);
+		
+		gifIcon = new ImageIcon(gifIcon.getImage().getScaledInstance(100, 100, Image.SCALE_REPLICATE));
+		JLabel loadingLabel =  new JLabel(gifIcon);
+		loadingLabel.setBounds(200, 350, 100, 100);
+		
+		
 		Image newImg = imgBckBtn.getScaledInstance(btnBck.getWidth(), btnBck.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon newImc = new ImageIcon(newImg);
         btnBck.setIcon(newImc);
@@ -95,16 +104,16 @@ public class Login extends JFrame {
         loginBtn.setIcon(newImcLogin);
         
         
-        
-        
 		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
 		UserService usrService = (UserService) appconfig.getBean(UserService.class);
 
 		
 		//Containers section
-		phoneNumberLabel.setFont(new Font("Ariel", Font.BOLD, 15));
+		phoneNumberLabel.setFont(new Font("Algerian", Font.BOLD, 20));
+		phoneNumberLabel.setForeground(new Color(102-255-102));
 		phoneNumberLabel.setAlignmentX(CENTER_ALIGNMENT);
-		passwdLabel.setFont(new Font("Ariel", Font.BOLD, 15));
+		passwdLabel.setFont(new Font("Algerian", Font.BOLD, 20));
+		passwdLabel.setForeground(new Color(102-255-102));
 		passwdLabel.setAlignmentX(CENTER_ALIGNMENT);
 		
 		PhonenumberContainer.add(phoneNumberLabel);
@@ -143,6 +152,7 @@ public class Login extends JFrame {
 		backgroundImage.add(elementsContainer);
 		backgroundImage.add(loginBtn);
 		backgroundImage.add(btnBck);
+		
 
 		
 		//Barra para controlar la ventana 
@@ -162,9 +172,7 @@ public class Login extends JFrame {
 			}
 		});
 		
-		
-		
-	
+
 		header.setLayout(null);
 		header.setBackground(new Color(0,0,0,0));
 		backgroundImage.add(header);
@@ -175,20 +183,25 @@ public class Login extends JFrame {
 		loginBtn.addActionListener(new ActionListener() { 
 			@SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
-				
+					backgroundImage.add(loadingLabel);	
 				  try {
+					  
+					  new java.util.Timer().schedule(new java.util.TimerTask() {
+						    @Override
+						    public void run() {
+								  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
+									    backgroundImage.remove(loadingLabel);
+										dispose();
+										new LoggedIn(usrService.retriveUsrInfo(fieldPhoneNumber.getText()));
+									((ConfigurableApplicationContext)appconfig).close();
+								  } else {
+									  alert.showMessageDialog(null,"Please enter the right information",
+								               "User might not exist", JOptionPane.WARNING_MESSAGE);
+								  }
+						    }
+						}, 1500);
 					  Long verifyString = Long.parseLong(fieldPhoneNumber.getText());
-					  System.out.println("Your name is " + fieldPhoneNumber.getText() + " and your password is " + passwdField.getText());
-					  usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText());
-					  System.out.println(usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()));
-					  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
-						dispose();
-						new LoggedIn(usrService.retriveUsrInfo(fieldPhoneNumber.getText()));
-						((ConfigurableApplicationContext)appconfig).close();
-					  } else {
-						  alert.showMessageDialog(null,"Please enter the right information",
-					               "User might not exist", JOptionPane.WARNING_MESSAGE);
-					  }
+
 					 
 				} catch (NumberFormatException e2) {
 					if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() > 0) {
