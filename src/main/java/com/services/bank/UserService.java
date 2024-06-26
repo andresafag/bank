@@ -29,7 +29,7 @@ public class UserService {
 
 			     Message message = Message.creator(
 			             new com.twilio.type.PhoneNumber(String.format("+57%s", sendTo)),
-			             new com.twilio.type.PhoneNumber("+13103417569"),magicNumberToString)
+			             new com.twilio.type.PhoneNumber("+12137846503"),magicNumberToString)
 			         .create();
 			     System.out.println(message.getSid());
 			     System.out.println("este es el numero " + magicNumberToString);

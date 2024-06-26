@@ -114,7 +114,7 @@ public class LoggedIn extends JFrame{
         btnExit.setIcon(newImcLogout);
 		
 
-		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 20));
+		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 27));
 		usernameContainer.add(labelUsername);
 		usernameContainer.add(UsrnameLabel);
 		usernameContainer.setBounds(5, 5, 90, 100);
@@ -194,9 +194,7 @@ public class LoggedIn extends JFrame{
 						headerMouseDragged(e);
 					}
 				});
-				
-				
-				
+	
 			
 				header.setLayout(null);
 				header.setBackground(new Color(0,0,0,0));
@@ -256,6 +254,7 @@ public class LoggedIn extends JFrame{
 				
 		
 				String sendConfirmationToWithdraw = usrtService.sendConfirmationSMS(phoneNumberString);
+				System.out.println("este es el numero "+ sendConfirmationToWithdraw);
 				
 				if(!sendConfirmationToWithdraw.equals("0")) {
 					String inputConfirmationNumber = JOptionPane.showInputDialog("Please enter the number you were sent to your phone");
@@ -268,7 +267,9 @@ public class LoggedIn extends JFrame{
 							JOptionPane.showMessageDialog(null, String.format("You withdrew successfully $%s", inputConfirmationAmount),  "Withdrawn", JOptionPane.INFORMATION_MESSAGE);
 							balanceLabel.setText(String.format("$%s",accntService.returnBalance(phoneNumberString)));
 						}
-					} 
+					} else {
+						System.out.println("not the code you were sent");
+					}
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "That number does not match",  "Wrong number entered", JOptionPane.ERROR_MESSAGE);
