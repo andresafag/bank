@@ -35,6 +35,7 @@ public class LoggedIn extends JFrame{
 	private JLabel labelUsername = new JLabel();
 	private ImageIcon usrIcon = new ImageIcon(getClass().getResource("../../user.png"));
 	private Image usrImg = usrIcon.getImage();
+	private JLabel balanceLabel = new JLabel();
 	private JLabel labelBell = new JLabel();
 	private ImageIcon bellIcon= new ImageIcon(getClass().getResource("../../notification.png"));
 	private Image bellImage = bellIcon.getImage();
@@ -42,6 +43,7 @@ public class LoggedIn extends JFrame{
 	private JPanel notificationContainer = new JPanel();
 	private JButton btnNotification = new JButton("campana icono");
 	private JPanel panel =  new JPanel();
+	private JPanel panel2 =  new JPanel();
 	private JPanel transactionsContainer =  new JPanel();
 	private JButton btnDeposit = new JButton("Deposit");
 	private JButton btnWithdraw = new JButton("Withdraw");
@@ -68,6 +70,30 @@ public class LoggedIn extends JFrame{
 	
 	public LoggedIn(Map<String,Object> param) {
 		setUndecorated(true);
+		
+		// Set the background
+		backgroundImage.setSize(500,600);
+		Image nnn = icon.getImage().getScaledInstance(backgroundImage.getWidth(), backgroundImage.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon nn = new ImageIcon(nnn);
+		backgroundImage.setIcon(nn);
+		
+		//username icon
+		labelUsername.setSize(50,50);
+		Image newImg = usrImg.getScaledInstance(labelUsername.getWidth(), labelUsername.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImc = new ImageIcon(newImg);
+		labelUsername.setIcon(newImc);
+		
+		//logout icon
+		btnExit.setSize(80, 80);
+		Image newImgLogout = exitImage.getScaledInstance(btnExit.getWidth(), btnExit.getHeight(), Image.SCALE_DEFAULT);
+        ImageIcon newImcLogout = new ImageIcon(newImgLogout);
+        btnExit.setIcon(newImcLogout);
+        
+        //main icon
+        ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
+		Image symbol = mainIcon.getImage();
+		
+		//user information
 		String usrname = (String) param.get("username");
 		Long balanceNumber = (Long) param.get("balance");
 		String balanceString = String.valueOf(balanceNumber);
@@ -76,106 +102,104 @@ public class LoggedIn extends JFrame{
 		Long phoneNumber = (Long) param.get("phonenumber");
 		String phoneNumberString = String.valueOf(phoneNumber);
 		
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();	
 		
 //		String name = "andy";
 //		String lastName = "acosta";
 //		String phoneNumberString = "8888888888";
 //		String balanceString = "300";
-		UsrnameLabel.setText(usrname);
-		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		UsrnameLabel.setForeground(new Color(102-255-102));
 		
-		// Set the background
-		backgroundImage.setSize(500,600);
-		Image nnn = icon.getImage().getScaledInstance(backgroundImage.getWidth(), backgroundImage.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon nn = new ImageIcon(nnn);
-		backgroundImage.setIcon(nn);
+		
+		
+		UsrnameLabel.setText(usrname);
+		UsrnameLabel.setForeground(new Color(102-255-102));
+		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 27));
 		
 		
 		//Box containing the username items
 		usernameContainer.setOpaque(false);
-		labelUsername.setSize(50, 50);
-		labelBell.setSize(50,50);
+		usernameContainer.add(labelUsername);
+		usernameContainer.add(UsrnameLabel);
+//		usernameContainer.setBorder(BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
+
+//		labelBell.setSize(50,50);
 		btnExit.setBounds(5, 420, 95, 100);
 		btnExit.setOpaque(false);
 		btnExit.setBorderPainted(false);
 		btnExit.setContentAreaFilled(false);
 		
-		Image newImg = usrImg.getScaledInstance(labelUsername.getWidth(), labelUsername.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon newImc = new ImageIcon(newImg);
-		labelUsername.setIcon(newImc);
 
-		Image newImgNotification = bellImage.getScaledInstance(labelBell.getWidth(), labelBell.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon newImcNotification = new ImageIcon(newImgNotification);
-        labelBell.setIcon(newImcNotification);
-		
-		Image newImgLogout = exitImage.getScaledInstance(btnExit.getWidth(), btnExit.getHeight(), Image.SCALE_DEFAULT);
-        ImageIcon newImcLogout = new ImageIcon(newImgLogout);
-        btnExit.setIcon(newImcLogout);
-		
 
-		UsrnameLabel.setFont(new Font("Serif", Font.BOLD, 27));
-		usernameContainer.add(labelUsername);
-		usernameContainer.add(UsrnameLabel);
-		usernameContainer.setBounds(5, 5, 90, 100);
+//		Image newImgNotification = bellImage.getScaledInstance(labelBell.getWidth(), labelBell.getHeight(), Image.SCALE_SMOOTH);
+//        ImageIcon newImcNotification = new ImageIcon(newImgNotification);
+//        labelBell.setIcon(newImcNotification);
+//		
 		
-		//Box containing the notifications
-		notificationContainer.setOpaque(false);
-		btnNotification.setSize(50, 50);
-		notificationContainer.add(labelBell);
-		notificationContainer.setSize(150, 50);
-		notificationContainer.setBounds(430, 5, 100,200);
+//		//Box containing the notifications
+//		notificationContainer.setOpaque(false);
+//		notificationContainer.add(labelBell);
+//		notificationContainer.setSize(150, 50);
+//		notificationContainer.setBounds(430, 5, 100,200);
 
 		
-		//Box showing the money availables
-		JLabel balanceLabel = new JLabel(String.format("$ %s",balanceString));
-		availableLabel.setBounds(200, 160, 200, 50);
+		backgroundImage.add(transactionsContainer);
+		
+		//Box showing the money available
 		availableLabel.setFont(new Font("Algerian", Font.BOLD, 25));
 		availableLabel.setForeground(new Color(102-255-102));
-		balanceLabel.setBounds(200, 190, 300, 50);
+//		availableLabel.setBorder(BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
+		//--------------------------------------------------------
+		balanceLabel.setText(phoneNumberString.format("$%s",balanceString));
 		balanceLabel.setForeground(new Color(200-255-204));
 		balanceLabel.setFont(new Font("Alegerian", Font.BOLD, 25));
-		
 			
-		//Box container to transactions
-		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-//		transactionsContainer.setBorder( BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
-				
+			
 		
 		//transactions buttons
 		btnDeposit.setBackground(new Color(102-255-102));
 		btnDeposit.setForeground(Color.black);
 		btnDeposit.setFont(new Font("Ariel", Font.BOLD, 20));
+		//----------------------------------------------------------
 		btnWithdraw.setBackground(new Color(102-255-102));
 		btnWithdraw.setForeground(Color.black);
 		btnWithdraw.setFont(new Font("Ariel", Font.BOLD, 20));
+		//----------------------------------------------------------
 		transactionsContainer.add(btnDeposit);
 		transactionsContainer.add(btnWithdraw);
 		transactionsContainer.setLayout(new BoxLayout(transactionsContainer, BoxLayout.X_AXIS));
+//		transactionsContainer.setBorder(BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
+
 		transactionsContainer.setOpaque(false);
-		panel.add(transactionsContainer);
+		
 		panel.add(usernameContainer);
+		panel2.add(transactionsContainer);	
 		
+		// size and location of window elements
+		btnDeposit.setBounds(0, 0, 100, 100);
+		btnWithdraw.setBounds(0, 0, 100, 100);
+		usernameContainer.setBounds(10, 5, 180, 100);
+		transactionsContainer.setBounds(150,300,300,100);
+		availableLabel.setBounds(200, 160, 200, 50);
+		balanceLabel.setBounds(200, 190, 300, 50);
+		//		backgroundImage.add(notificationContainer);
 		
-		ImageIcon mainIcon = new ImageIcon(getClass().getResource("../../dollar-symbol.png"));
-		Image symbol = mainIcon.getImage();
+		backgroundImage.add(usernameContainer);
+		backgroundImage.add(availableLabel);
+		backgroundImage.add(balanceLabel);
+		backgroundImage.add(btnExit);
+		backgroundImage.add(transactionsContainer);
+		
+		//main window additions
 		setIconImage(symbol);
 		add(backgroundImage);
+		add(panel2);
 		add(panel);
 		setSize(500, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setTitle("LoggedIn");
-		transactionsContainer.setSize(200, 200);
-		transactionsContainer.setBounds(150,300,300,100);
-		usernameContainer.setBounds(0, 2, 300, 300);
-		backgroundImage.add(transactionsContainer);
-		backgroundImage.add(usernameContainer);
-		backgroundImage.add(notificationContainer);
-		backgroundImage.add(availableLabel);
-		backgroundImage.add(balanceLabel);
-		backgroundImage.add(btnExit);
+
 		
 
 		//Barra para controlar la ventana 
@@ -228,10 +252,9 @@ public class LoggedIn extends JFrame{
 							returnValue=0;
 							
 						} else if(returnValue > 0) {
-							JOptionPane.showMessageDialog(null, String.format("You transferred successfully $%s", inputAmount),  "Done", JOptionPane.INFORMATION_MESSAGE);
-							
-							balanceLabel.setText(String.format("$%s",accntService.returnBalance(phoneNumberString)));
+							JOptionPane.showMessageDialog(null, String.format("You transferred successfully $%s", inputAmount),  "Done", JOptionPane.INFORMATION_MESSAGE);							
 							returnValue=0;
+							balanceLabel.setText(String.format("$%s",accntService.returnBalance(phoneNumberString)));
 						} else {
 							JOptionPane.showMessageDialog(null, "Your have insufficient funds" , "Error", JOptionPane.ERROR_MESSAGE);
 							returnValue=0;

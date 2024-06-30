@@ -11,8 +11,14 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +54,7 @@ public class Login extends JFrame {
 	private JPanel btnContainer = new JPanel();
 	private JLabel phoneNumberLabel =  new JLabel("Phone number");
 	private JTextField fieldPhoneNumber = new JTextField();
+	private JLabel loadingLabel =  new JLabel();
 	private JLabel passwdLabel =  new JLabel("Password");
 	private JPasswordField passwdField = new JPasswordField();
 	private JButton loginBtn = new JButton();
@@ -91,7 +98,7 @@ public class Login extends JFrame {
 		backgroundImage.setIcon(nn);
 		
 		gifIcon = new ImageIcon(gifIcon.getImage().getScaledInstance(100, 100, Image.SCALE_REPLICATE));
-		JLabel loadingLabel =  new JLabel(gifIcon);
+		loadingLabel.setIcon(gifIcon);
 		loadingLabel.setBounds(200, 350, 100, 100);
 		
 		
@@ -103,10 +110,6 @@ public class Login extends JFrame {
         ImageIcon newImcLogin = new ImageIcon(newImgLogin);
         loginBtn.setIcon(newImcLogin);
         
-        
-		ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
-		UserService usrService = (UserService) appconfig.getBean(UserService.class);
-
 		
 		//Containers section
 		phoneNumberLabel.setFont(new Font("Algerian", Font.BOLD, 20));
@@ -152,8 +155,10 @@ public class Login extends JFrame {
 		backgroundImage.add(elementsContainer);
 		backgroundImage.add(loginBtn);
 		backgroundImage.add(btnBck);
-		
+		backgroundImage.add(loadingLabel);
+		loadingLabel.setVisible(false);
 
+		
 		
 		//Barra para controlar la ventana 
 		JPanel header = new JPanel();
@@ -179,49 +184,68 @@ public class Login extends JFrame {
 		
 		
 		
-		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//Events --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------;	
+		if(backgroundImage.isShowing()) {
+			fieldPhoneNumber.requestFocus();
+		}
+		
+		fieldPhoneNumber.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method 
+				if( e.getKeyCode() == KeyEvent.VK_ENTER )
+				{
+					launch();
+				} 
+				
+			}
+		});
+		
+		passwdField.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if( e.getKeyCode() == KeyEvent.VK_ENTER )
+				{
+					launch();
+				} 
+				
+			}
+		});
+		
+		
+		
 		loginBtn.addActionListener(new ActionListener() { 
-			@SuppressWarnings({ "deprecation", "static-access" })
 			public void actionPerformed(ActionEvent e) { 
-					backgroundImage.add(loadingLabel);	
-				  try {
-					  
-					  new java.util.Timer().schedule(new java.util.TimerTask() {
-						    @Override
-						    public void run() {
-								  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
-									    backgroundImage.remove(loadingLabel);
-										dispose();
-										new LoggedIn(usrService.retriveUsrInfo(fieldPhoneNumber.getText()));
-									((ConfigurableApplicationContext)appconfig).close();
-								  } else {
-									  alert.showMessageDialog(null,"Please enter the right information",
-								               "User might not exist", JOptionPane.WARNING_MESSAGE);
-								  }
-						    }
-						}, 1500);
-					  Long verifyString = Long.parseLong(fieldPhoneNumber.getText());
-
-					 
-				} catch (NumberFormatException e2) {
-					if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() > 0) {
-						alert.showMessageDialog(null,"Please enter a number",
-					               "No phone number entered", JOptionPane.WARNING_MESSAGE);
-					} else if (passwdField.getText().length() == 0 && fieldPhoneNumber.getText().length() > 0) {
-						alert.showMessageDialog(null,"Please enter password",
-					               "No password entered", JOptionPane.WARNING_MESSAGE);
-					} else if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() == 0) {
-						alert.showMessageDialog(null,"Please enter something",
-					               "No data entered", JOptionPane.WARNING_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(null, "Enter only numbers in the username field" ,"ALERT" , JOptionPane.ERROR_MESSAGE);
-					}
-					
-					
-				}
+				launch();
 			  } 
 			});
 		
+		
+		
+		//Go back 
 		btnBck.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -231,10 +255,59 @@ public class Login extends JFrame {
 		});
 		
 	}
+	
+	
     private void headerMouseDragged(java.awt.event.MouseEvent evt) {
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-}
+    }
+    
+    private void launch() {  
+    	loadingLabel.setVisible(true);
+		  try {
+		    	
+			  new java.util.Timer().schedule(new java.util.TimerTask() {
+				    @Override
+				    public void run() {
+				    	ApplicationContext appconfig =  new AnnotationConfigApplicationContext(AppConfig.class);
+						UserService usrService = (UserService) appconfig.getBean(UserService.class);
+						  if (usrService.verifyUser(fieldPhoneNumber.getText(),passwdField.getText()) == false) {
+							  loadingLabel.setVisible(false);
+								dispose();
+								new LoggedIn(usrService.retriveUsrInfo(fieldPhoneNumber.getText()));
+							((ConfigurableApplicationContext)appconfig).close();
+						  } else {
+							  alert.showMessageDialog(null,"Please enter the right information","User might not exist", JOptionPane.WARNING_MESSAGE);
+							  ((ConfigurableApplicationContext)appconfig).close();
+							  loadingLabel.setVisible(false);
+						  }
+				    }
+				}, 2000);
+			  Long verifyString = Long.parseLong(fieldPhoneNumber.getText());
+
+			 
+		} catch (NumberFormatException e2) {
+			if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() > 0) {
+				alert.showMessageDialog(null,"Please enter a number","No phone number entered", JOptionPane.WARNING_MESSAGE);
+				passwdField.setText("");
+				loadingLabel.setVisible(false);
+			} else if (passwdField.getText().length() == 0 && fieldPhoneNumber.getText().length() > 0) {
+				alert.showMessageDialog(null,"Please enter password","No password entered", JOptionPane.WARNING_MESSAGE);
+				fieldPhoneNumber.setText("");
+				loadingLabel.setVisible(false);
+			} else if(fieldPhoneNumber.getText().length() == 0 && passwdField.getText().length() == 0) {
+				alert.showMessageDialog(null,"Please enter something","No data entered", JOptionPane.WARNING_MESSAGE);
+				loadingLabel.setVisible(false);
+			} 
+			else {
+				JOptionPane.showMessageDialog(null, "Enter only numbers in the username field" ,"ALERT" , JOptionPane.ERROR_MESSAGE);
+				loadingLabel.setVisible(false);
+			}
+			
+			
+		}
+    
+    }
 	
 }
