@@ -18,7 +18,11 @@ The below image show the window once logged in using the registered credentials
 ![LoggedIn 6_25_2024 8_24_12 PM](https://github.com/andresafag/bank/assets/99931537/79bcac91-0663-4827-99d5-f9241c747f06)
 
 ***
-
-
 https://github.com/andresafag/bank/assets/99931537/74bffead-7dcf-4614-812b-151c307d27b4
+***
+This is what the registration looks like
+
+
+https://github.com/andresafag/bank/assets/99931537/beafc067-1434-46ba-9be9-ab7adfab9ab2
+
 
