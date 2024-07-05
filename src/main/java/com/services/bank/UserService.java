@@ -3,6 +3,9 @@ package com.services.bank;
 import com.twilio.Twilio;
 import com.twilio.exception.ApiException;
 import com.twilio.rest.api.v2010.account.Message;
+
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.util.Map;
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -19,17 +22,19 @@ public class UserService {
 	
 
 	public String sendConfirmationSMS(String sendTo) {
+			Dotenv dotenv = Dotenv.load();
+			
 			 Random rand = new Random() ;
 			 String messagingResult = null;
 			 int magicNumber = rand.nextInt() & Integer.MAX_VALUE;
 			 String magicNumberToString = String.valueOf(magicNumber);
-			 Twilio.init("ACce0a292656b36d6ab1bba58a271a1c21", "3a793270128388020a678faf110349ad");
+			 Twilio.init(dotenv.get("VAL1"), "VAL2");
 			 
 			 try { 
 
 			     Message message = Message.creator(
 			             new com.twilio.type.PhoneNumber(String.format("+57%s", sendTo)),
-			             new com.twilio.type.PhoneNumber("+12137846503"),magicNumberToString)
+			             new com.twilio.type.PhoneNumber(String.format("+%s", dotenv.get("NUMBER"))),magicNumberToString)
 			         .create();
 			     System.out.println(message.getSid());
 			     System.out.println("este es el numero " + magicNumberToString);
